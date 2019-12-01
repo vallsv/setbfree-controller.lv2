@@ -4,4 +4,5 @@
 <https://github.com/vallsv/setbfree-controller>
     a lv2:Plugin ;
     lv2:binary <setbfree-controller.so>  ;
-    rdfs:seeAlso <setbfree-controller.ttl> .
+    rdfs:seeAlso <setbfree-controller.ttl> ,
+                 <modgui.ttl> .
