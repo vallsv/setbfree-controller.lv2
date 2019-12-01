@@ -1,0 +1,88 @@
+@prefix atom: <http://lv2plug.in/ns/ext/atom#> .
+@prefix doap: <http://usefulinc.com/ns/doap#> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix lv2:  <http://lv2plug.in/ns/lv2core#> .
+@prefix midi: <http://lv2plug.in/ns/ext/midi#> .
+@prefix mod:  <http://moddevices.com/ns/mod#> .
+@prefix rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+<https://github.com/vallsv/setbfree-controller>
+        a mod:MIDIPlugin ,
+            lv2:UtilityPlugin ,
+            lv2:Plugin ;
+        doap:name "setBfree MIDI controller" ;
+        doap:license "GPLv2+" ;
+        rdfs:comment """
+MIDI controller for setBfree.
+This controller provides parameters to custom setBfree using MIDI, the MIDI input can be connected to the output of setBfree the reflect the real configuration of the synthesizer.""" ;
+        lv2:minorVersion 1 ;
+        lv2:microVersion 0 ;
+        lv2:optionalFeature lv2:hardRTCapable ;
+        lv2:port [
+                a lv2:InputPort , atom:AtomPort ;
+                atom:bufferType atom:Sequence ;
+                atom:supports midi:MidiEvent ;
+                lv2:index 0 ;
+                lv2:symbol "in" ;
+                lv2:name "In" ;
+        ] , [
+                a lv2:OutputPort , atom:AtomPort ;
+                atom:bufferType atom:Sequence ;
+                atom:supports midi:MidiEvent ;
+                lv2:index 1 ;
+                lv2:symbol "out" ;
+                lv2:name "Out" ;
+        ] , [
+                a lv2:InputPort , lv2:ControlPort ;
+                lv2:index 2 ;
+                lv2:symbol "drawbar_upper_16" ; lv2:name "Upper Drawbar 16'" ;
+                lv2:default 0 ; lv2:minimum 0 ; lv2:maximum 8 ; lv2:portProperty lv2:integer ;
+        ] , [
+                a lv2:InputPort , lv2:ControlPort ;
+                lv2:index 3 ;
+                lv2:symbol "drawbar_upper_513" ; lv2:name "Upper Drawbar 5 1/3'" ;
+                lv2:default 0 ; lv2:minimum 0 ; lv2:maximum 8 ; lv2:portProperty lv2:integer ;
+        ] , [
+                a lv2:InputPort , lv2:ControlPort ;
+                lv2:index 4 ;
+                lv2:symbol "drawbar_upper_8" ; lv2:name "Upper Drawbar 8'" ;
+                lv2:default 0 ; lv2:minimum 0 ; lv2:maximum 8 ; lv2:portProperty lv2:integer ;
+        ] , [
+                a lv2:InputPort , lv2:ControlPort ;
+                lv2:index 5 ;
+                lv2:symbol "drawbar_upper_4" ; lv2:name "Upper Drawbar 4'" ;
+                lv2:default 0 ; lv2:minimum 0 ; lv2:maximum 8 ; lv2:portProperty lv2:integer ;
+        ] , [
+                a lv2:InputPort , lv2:ControlPort ;
+                lv2:index 6 ;
+                lv2:symbol "drawbar_upper_223" ; lv2:name "Upper Drawbar 2 2/3'" ;
+                lv2:default 0 ; lv2:minimum 0 ; lv2:maximum 8 ; lv2:portProperty lv2:integer ;
+        ] , [
+                a lv2:InputPort , lv2:ControlPort ;
+                lv2:index 7 ;
+                lv2:symbol "drawbar_upper_2" ; lv2:name "Upper Drawbar 2'" ;
+                lv2:default 0 ; lv2:minimum 0 ; lv2:maximum 8 ; lv2:portProperty lv2:integer ;
+        ] , [
+                a lv2:InputPort , lv2:ControlPort ;
+                lv2:index 8 ;
+                lv2:symbol "drawbar_upper_135" ; lv2:name "Upper Drawbar 1 3/5'" ;
+                lv2:default 0 ; lv2:minimum 0 ; lv2:maximum 8 ; lv2:portProperty lv2:integer ;
+        ] , [
+                a lv2:InputPort , lv2:ControlPort ;
+                lv2:index 9 ;
+                lv2:symbol "drawbar_upper_113" ; lv2:name "Upper Drawbar 1 1/3'" ;
+                lv2:default 0 ; lv2:minimum 0 ; lv2:maximum 8 ; lv2:portProperty lv2:integer ;
+        ] , [
+                a lv2:InputPort , lv2:ControlPort ;
+                lv2:index 10 ;
+                lv2:symbol "drawbar_upper_1" ; lv2:name "Upper Drawbar 1'" ;
+                lv2:default 0 ; lv2:minimum 0 ; lv2:maximum 8 ; lv2:portProperty lv2:integer ;
+        ] ;
+
+        doap:developer [
+            foaf:name "vallsv" ;
+        ] ;
+
+        mod:brand "MOD" ;
+        mod:label "setBfree controller" .
