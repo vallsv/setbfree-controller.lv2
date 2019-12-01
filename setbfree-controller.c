@@ -27,6 +27,29 @@ typedef enum {
     PORT_CONTROL_DRAWBAR_UPPER_135,
     PORT_CONTROL_DRAWBAR_UPPER_113,
     PORT_CONTROL_DRAWBAR_UPPER_1,
+
+    PORT_CONTROL_DRAWBAR_LOWER = 11,
+    PORT_CONTROL_DRAWBAR_LOWER_16 = 11,
+    PORT_CONTROL_DRAWBAR_LOWER_513,
+    PORT_CONTROL_DRAWBAR_LOWER_8,
+    PORT_CONTROL_DRAWBAR_LOWER_4,
+    PORT_CONTROL_DRAWBAR_LOWER_223,
+    PORT_CONTROL_DRAWBAR_LOWER_2,
+    PORT_CONTROL_DRAWBAR_LOWER_135,
+    PORT_CONTROL_DRAWBAR_LOWER_113,
+    PORT_CONTROL_DRAWBAR_LOWER_1,
+
+    PORT_CONTROL_DRAWBAR_PEDAL = 20,
+    PORT_CONTROL_DRAWBAR_PEDAL_16 = 20,
+    PORT_CONTROL_DRAWBAR_PEDAL_513,
+    PORT_CONTROL_DRAWBAR_PEDAL_8,
+    PORT_CONTROL_DRAWBAR_PEDAL_4,
+    PORT_CONTROL_DRAWBAR_PEDAL_223,
+    PORT_CONTROL_DRAWBAR_PEDAL_2,
+    PORT_CONTROL_DRAWBAR_PEDAL_135,
+    PORT_CONTROL_DRAWBAR_PEDAL_113,
+    PORT_CONTROL_DRAWBAR_PEDAL_1,
+
 	// Note: it have to be the last
 	PORT_ENUM_SIZE
 } PortEnum;
@@ -68,7 +91,7 @@ static LV2_Handle instantiate(const LV2_Descriptor*     descriptor,
     Data* self = (Data*)calloc(1, sizeof(Data));
 
     for (int port = PORT_CONTROL_DRAWBAR_UPPER_16;
-         port <= PORT_CONTROL_DRAWBAR_UPPER_1; port++) {
+         port < PORT_ENUM_SIZE; port++) {
     	Parameter *parameter = self->parameters + port;
     	parameter->last_value = -1;
     }
@@ -81,6 +104,26 @@ static LV2_Handle instantiate(const LV2_Descriptor*     descriptor,
     self->parameters[PORT_CONTROL_DRAWBAR_UPPER+6].midi_config = (SetBFreeMidiConfig) { .channel = 0, .control = 76 };
     self->parameters[PORT_CONTROL_DRAWBAR_UPPER+7].midi_config = (SetBFreeMidiConfig) { .channel = 0, .control = 77 };
     self->parameters[PORT_CONTROL_DRAWBAR_UPPER+8].midi_config = (SetBFreeMidiConfig) { .channel = 0, .control = 78 };
+
+    self->parameters[PORT_CONTROL_DRAWBAR_LOWER+0].midi_config = (SetBFreeMidiConfig) { .channel = 1, .control = 70 };
+    self->parameters[PORT_CONTROL_DRAWBAR_LOWER+1].midi_config = (SetBFreeMidiConfig) { .channel = 1, .control = 71 };
+    self->parameters[PORT_CONTROL_DRAWBAR_LOWER+2].midi_config = (SetBFreeMidiConfig) { .channel = 1, .control = 72 };
+    self->parameters[PORT_CONTROL_DRAWBAR_LOWER+3].midi_config = (SetBFreeMidiConfig) { .channel = 1, .control = 73 };
+    self->parameters[PORT_CONTROL_DRAWBAR_LOWER+4].midi_config = (SetBFreeMidiConfig) { .channel = 1, .control = 74 };
+    self->parameters[PORT_CONTROL_DRAWBAR_LOWER+5].midi_config = (SetBFreeMidiConfig) { .channel = 1, .control = 75 };
+    self->parameters[PORT_CONTROL_DRAWBAR_LOWER+6].midi_config = (SetBFreeMidiConfig) { .channel = 1, .control = 76 };
+    self->parameters[PORT_CONTROL_DRAWBAR_LOWER+7].midi_config = (SetBFreeMidiConfig) { .channel = 1, .control = 77 };
+    self->parameters[PORT_CONTROL_DRAWBAR_LOWER+8].midi_config = (SetBFreeMidiConfig) { .channel = 1, .control = 78 };
+
+    self->parameters[PORT_CONTROL_DRAWBAR_PEDAL+0].midi_config = (SetBFreeMidiConfig) { .channel = 2, .control = 70 };
+    self->parameters[PORT_CONTROL_DRAWBAR_PEDAL+1].midi_config = (SetBFreeMidiConfig) { .channel = 2, .control = 71 };
+    self->parameters[PORT_CONTROL_DRAWBAR_PEDAL+2].midi_config = (SetBFreeMidiConfig) { .channel = 2, .control = 72 };
+    self->parameters[PORT_CONTROL_DRAWBAR_PEDAL+3].midi_config = (SetBFreeMidiConfig) { .channel = 2, .control = 73 };
+    self->parameters[PORT_CONTROL_DRAWBAR_PEDAL+4].midi_config = (SetBFreeMidiConfig) { .channel = 2, .control = 74 };
+    self->parameters[PORT_CONTROL_DRAWBAR_PEDAL+5].midi_config = (SetBFreeMidiConfig) { .channel = 2, .control = 75 };
+    self->parameters[PORT_CONTROL_DRAWBAR_PEDAL+6].midi_config = (SetBFreeMidiConfig) { .channel = 2, .control = 76 };
+    self->parameters[PORT_CONTROL_DRAWBAR_PEDAL+7].midi_config = (SetBFreeMidiConfig) { .channel = 2, .control = 77 };
+    self->parameters[PORT_CONTROL_DRAWBAR_PEDAL+8].midi_config = (SetBFreeMidiConfig) { .channel = 2, .control = 78 };
 
     // Get host features
     LV2_URID_Map* urid_map = NULL;
@@ -135,7 +178,7 @@ static void run(LV2_Handle instance, uint32_t sample_count)
 
     msg = msg_buffer;
     for (int port = PORT_CONTROL_DRAWBAR_UPPER_16;
-         port <= PORT_CONTROL_DRAWBAR_UPPER_1; port++) {
+         port <= PORT_CONTROL_DRAWBAR_PEDAL_1; port++) {
     	Parameter *parameter = self->parameters + port;
 
     	if (parameter->last_value == *parameter->port) {
