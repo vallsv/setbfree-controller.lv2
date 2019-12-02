@@ -311,32 +311,17 @@
 /* = CUSTOM THING
 ================================================ */
 
-.mod-pedal-boxy{{{cns}}} .mod-slider.drawbar_upper_16  { top: -10px; left: 0px; }
-.mod-pedal-boxy{{{cns}}} .mod-slider.drawbar_upper_513 { top: -10px; left: 30px; }
-.mod-pedal-boxy{{{cns}}} .mod-slider.drawbar_upper_8   { top: -10px; left: 60px; }
-.mod-pedal-boxy{{{cns}}} .mod-slider.drawbar_upper_4   { top: -10px; left: 90px; }
-.mod-pedal-boxy{{{cns}}} .mod-slider.drawbar_upper_223 { top: -10px; left: 120px; }
-.mod-pedal-boxy{{{cns}}} .mod-slider.drawbar_upper_2   { top: -10px; left: 150px; }
-.mod-pedal-boxy{{{cns}}} .mod-slider.drawbar_upper_135 { top: -10px; left: 180px; }
-.mod-pedal-boxy{{{cns}}} .mod-slider.drawbar_upper_113 { top: -10px; left: 210px; } 
-.mod-pedal-boxy{{{cns}}} .mod-slider.drawbar_upper_1   { top: -10px; left: 240px; }
+.mod-pedal-boxy{{{cns}}} .mod-slider.drawbar_upper { top: -10px; }
+.mod-pedal-boxy{{{cns}}} .mod-slider.drawbar_lower { top: 120px; }
+.mod-pedal-boxy{{{cns}}} .mod-slider.drawbar_pedal { top: 250px; }
 
-.mod-pedal-boxy{{{cns}}} .mod-slider.drawbar_lower_16  { top: 120px; left: 0px; }
-.mod-pedal-boxy{{{cns}}} .mod-slider.drawbar_lower_513 { top: 120px; left: 30px; }
-.mod-pedal-boxy{{{cns}}} .mod-slider.drawbar_lower_8   { top: 120px; left: 60px; }
-.mod-pedal-boxy{{{cns}}} .mod-slider.drawbar_lower_4   { top: 120px; left: 90px; }
-.mod-pedal-boxy{{{cns}}} .mod-slider.drawbar_lower_223 { top: 120px; left: 120px; }
-.mod-pedal-boxy{{{cns}}} .mod-slider.drawbar_lower_2   { top: 120px; left: 150px; }
-.mod-pedal-boxy{{{cns}}} .mod-slider.drawbar_lower_135 { top: 120px; left: 180px; }
-.mod-pedal-boxy{{{cns}}} .mod-slider.drawbar_lower_113 { top: 120px; left: 210px; } 
-.mod-pedal-boxy{{{cns}}} .mod-slider.drawbar_lower_1   { top: 120px; left: 240px; }
+.mod-pedal-boxy{{{cns}}} .mod-slider.drawbar_16  { left: 0px; }
+.mod-pedal-boxy{{{cns}}} .mod-slider.drawbar_513 { left: 30px; }
+.mod-pedal-boxy{{{cns}}} .mod-slider.drawbar_8   { left: 60px; }
+.mod-pedal-boxy{{{cns}}} .mod-slider.drawbar_4   { left: 90px; }
+.mod-pedal-boxy{{{cns}}} .mod-slider.drawbar_223 { left: 120px; }
+.mod-pedal-boxy{{{cns}}} .mod-slider.drawbar_2   { left: 150px; }
+.mod-pedal-boxy{{{cns}}} .mod-slider.drawbar_135 { left: 180px; }
+.mod-pedal-boxy{{{cns}}} .mod-slider.drawbar_113 { left: 210px; } 
+.mod-pedal-boxy{{{cns}}} .mod-slider.drawbar_1   { left: 240px; }
 
-.mod-pedal-boxy{{{cns}}} .mod-slider.drawbar_pedal_16  { top: 250px; left: 0px; }
-.mod-pedal-boxy{{{cns}}} .mod-slider.drawbar_pedal_513 { top: 250px; left: 30px; }
-.mod-pedal-boxy{{{cns}}} .mod-slider.drawbar_pedal_8   { top: 250px; left: 60px; }
-.mod-pedal-boxy{{{cns}}} .mod-slider.drawbar_pedal_4   { top: 250px; left: 90px; }
-.mod-pedal-boxy{{{cns}}} .mod-slider.drawbar_pedal_223 { top: 250px; left: 120px; }
-.mod-pedal-boxy{{{cns}}} .mod-slider.drawbar_pedal_2   { top: 250px; left: 150px; }
-.mod-pedal-boxy{{{cns}}} .mod-slider.drawbar_pedal_135 { top: 250px; left: 180px; }
-.mod-pedal-boxy{{{cns}}} .mod-slider.drawbar_pedal_113 { top: 250px; left: 210px; } 
-.mod-pedal-boxy{{{cns}}} .mod-slider.drawbar_pedal_1   { top: 250px; left: 240px; }

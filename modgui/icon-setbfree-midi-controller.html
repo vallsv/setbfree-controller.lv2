@@ -11,6 +11,22 @@
         </div>
         {{/controls}}
     </div>
+<script>
+var sliders = document.querySelectorAll(".mod-slider")
+sliders.forEach(function(slider) {
+	var classes = slider.className + " ";
+	var values = [
+		'_upper', '_lower', '_pedal',
+		'_16 ','_513 ','_8 ','_4 ','_223 ',
+		'_2 ','_135 ','_113 ','_1 '];
+	values.forEach(function(k) {
+		if (classes.includes(k)) {
+			classes = classes + " drawbar" + k;
+		}
+	});
+	slider.className = classes;
+});
+</script>
    <div class="mod-footswitch" mod-role="bypass"></div>
    <div class="mod-pedal-input">
         {{#effect.ports.audio.input}}
