@@ -1,0 +1,382 @@
+/* STYLES FOR THE BOXY PEDAL */
+
+@import url(/fonts/nexa/stylesheet.css);
+@import url(/fonts/questrial/stylesheet.css);
+
+
+/* = CONTAINER
+================================================ */
+#mod-pedal-{{{cns}}} {
+    background-position:center center;
+    background-repeat:no-repeat;
+    background-size:230px 431px;
+    height:431px;
+    position:absolute;
+    width:230px;
+    border-radius: 21px;
+}
+
+#mod-pedal-{{{cns}}}.mod-boxy100 {
+    background-size:421px 431px;
+    width:421px;
+}
+
+/* = PLUGIN'S AUTHOR
+================================================ */
+#mod-pedal-{{{cns}}} .mod-plugin-brand {
+    display: none;
+	left:0;
+    position:absolute;
+    right:0;
+    text-align:center;
+    text-transform:uppercase;
+    top:160px;
+}
+
+#mod-pedal-{{{cns}}} .mod-plugin-brand h1 {
+    border-color:#000;
+    border-radius:12px;
+    border-style:solid;
+    border-width:4px;
+    display:inline-block;
+    font-family:"Nexa";
+    font-size:32px;
+    padding:3px 9px 0;
+}
+
+#mod-pedal-{{{cns}}}.mod-one-footswitch-presets .mod-plugin-brand {
+  top:12px;
+}
+
+
+/* = PLUGIN'S NAME
+================================================ */
+#mod-pedal-{{{cns}}} .mod-plugin-name {
+	display: none;
+    left:30px;
+    overflow:hidden;
+    position:absolute;
+    right:30px;
+    text-align:center;
+    top:340px;
+}
+
+#mod-pedal-{{{cns}}} .mod-plugin-name h1 {
+    font-family:"Questrial";
+    font-size:21px;
+    line-height:1;
+}
+
+/* = LIGHT ON/OFF
+================================================ */
+#mod-pedal-{{{cns}}} .mod-light {
+    background-position: center center;
+    background-repeat: no-repeat;
+    height: 32px;
+    position: absolute;
+    left: 280px;
+    right: 10px;
+    top: 265px;
+}
+
+/* = FOOTSWITCH
+================================================ */
+#mod-pedal-{{{cns}}} .mod-footswitch {
+    background-image:url(/resources/pedals/footswitch.png{{{ns}}});
+    background-position:bottom center;
+    background-repeat:no-repeat;
+    background-size:auto 132px;
+    bottom: 50px;
+    left: 285px;
+    right: 13px;
+    cursor:pointer;
+    height:66px;
+    width: 66px;
+    margin: auto;
+    position:absolute !important;
+}
+#mod-pedal-{{{cns}}} .mod-footswitch.on {
+    background-position-y: top !important
+}
+
+#mod-pedal-{{{cns}}} .mod-control-group {
+    margin:20px !important;
+    position:relative;
+    text-align:center;
+    z-index:30;
+}
+#mod-pedal-{{{cns}}} .top {
+    margin-top:0px !important;
+}
+
+#mod-pedal-{{{cns}}}.mod-one-footswitch-presets .mod-control-group {
+    margin:10px !important;
+    top:75px;
+}
+
+#mod-pedal-{{{cns}}}.mod-one-footswitch-presets .mod-control-group > select {
+    width:100%;
+}
+
+/* = KNOBS
+================================================ */
+
+#mod-pedal-{{{cns}}} .mod-control-group .mod-knob {
+    overflow: hidden;
+    position: absolute;
+    height: 80px;
+    width: 80px;
+}
+
+#mod-pedal-{{{cns}}} .mod-control-group .mod-knob > span.mod-knob-title {
+    position: absolute;
+    top: 64px;
+    left: -10px;
+	width: 100px;
+    display: block;
+    font-size: 11px;
+    font-weight: bold;
+    line-height: 1;
+    margin: 0;
+    overflow: hidden;
+    padding: 0;
+    text-transform: uppercase;
+	color: #909090;
+}
+
+#mod-pedal-{{{cns}}} .mod-control-group .mod-knob .mod-knob-image {
+    background-image:url(/resources/pedals/gold.png{{{ns}}});
+    background-repeat: no-repeat;
+    background-size: auto 60px;
+    height: 80px;
+    width: 60px;
+    margin: 0 auto;
+}
+
+/* = ENUMERATED LIST
+================================================ */
+#mod-pedal-{{{cns}}} .mod-enumerated-group {
+    height:31px;
+    margin: 20px auto 0 !important;
+    position: relative;
+    width: 190px;
+    z-index: 35;
+}
+
+#mod-pedal-{{{cns}}} .mod-enumerated {
+    background-position: right center;
+    background-repeat: no-repeat;
+    font-size: 11px;
+    font-weight: bold;
+    left: 0;
+    line-height: 2;
+    overflow: hidden;
+    position: absolute;
+    right: 0;
+    text-align: left;
+}
+
+#mod-pedal-{{{cns}}} .mod-enumerated .mod-enumerated-selected {
+    background-color:rgba(0,0,0,.3);
+    box-shadow: inset 0 0 4px rgba(0,0,0,.3);
+    border-radius: 4px;
+    padding: 3px 9px;
+}
+
+#mod-pedal-{{{cns}}} .mod-enumerated .mod-enumerated-selected {
+    border-radius:4px 4px 0 0;
+}
+
+#mod-pedal-{{{cns}}} .mod-enumerated .mod-enumerated-list {
+    display:none;
+    color:#fff;
+}
+
+#mod-pedal-{{{cns}}} .mod-enumerated .mod-enumerated-list {
+    background-color:rgba(0,0,0,.9);
+    display:none;
+    height:115px;
+    overflow:auto;
+    position:relative;
+}
+
+#mod-pedal-{{{cns}}} .mod-enumerated .mod-enumerated-list > div {
+    padding:3px 9px;
+}
+
+#mod-pedal-{{{cns}}} .mod-enumerated .mod-enumerated-list > div:hover {
+    background-color:rgba(255,255,255,.2);
+    cursor:pointer;
+}
+
+/* SLIDER
+================================================ */
+
+#mod-pedal-{{{cns}}} .mod-slider {
+    color: black;
+    float: left;
+    font-size: 11px;
+    height: 126px;
+    margin-bottom: 2px;
+    margin-right: 2px;
+    overflow: hidden;
+    position: absolute;
+    text-align: center;
+    width: 30px;
+}
+
+#mod-pedal-{{{cns}}} .mod-slider .mod-slider-title {
+    display: block;
+    font-size: 11px;
+    font-weight: bold;
+    overflow: hidden;
+    position: absolute;
+    width: 100%;
+	text-align: center;
+	color: #C0C0C0;
+}
+
+#mod-pedal-{{{cns}}} .mod-slider .mod-slider-image {
+    background-image: url(/resources/pedals/slider.png{{{ns}}});
+    background-repeat: no-repeat;
+    background-size: auto 110px;
+    height: 110px;
+    margin: 0 auto;
+    width: 44px;
+    top: 15px;
+    left: -8px;
+    position: absolute;
+}
+
+#mod-pedal-{{{cns}}} .mod-slider .mod-slider-image:hover {
+    cursor:pointer;
+}
+
+/* = BACKGROUND IMAGES - Color of the pedal
+================================================ */
+
+#mod-pedal-{{{cns}}}.mod-boxy100.mod-wood3 {
+    background-image:url(/resources/pedals/wood3.png{{{ns}}});
+}
+
+/* = COLORS - Color of the pedals labels
+================================================ */
+#mod-pedal-{{{cns}}}.mod-wood3 .mod-enumerated,
+{
+    background-image:url(/resources/utils/dropdown-arrow-white.png{{{ns}}});
+}
+#mod-pedal-{{{cns}}}.mod-wood3 h1,
+#mod-pedal-{{{cns}}}.mod-wood3 .mod-enumerated,
+#mod-pedal-{{{cns}}}.mod-wood3 .mod-control-group .mod-knob > span.mod-knob-title,
+{
+    color:white;
+}
+#mod-pedal-{{{cns}}}.mod-wood3 h1,
+{
+    border-color:white;
+}
+
+/* = Toggle
+================================================ */
+#mod-pedal-{{{cns}}} .mod-toggle {
+    background-image: url(/resources/pedals/toggle.png{{{ns}}});
+    background-position: bottom center;
+    background-repeat: no-repeat;
+    background-size: auto 120px;
+    cursor: pointer;
+    height: 60px;
+    width: 43px;
+    margin: 4px auto 0 auto;
+}
+
+#mod-pedal-{{{cns}}} .mod-toggle.on {
+    background-position: top center !important;
+}
+
+/* = CUSTOM THING
+================================================ */
+
+#mod-pedal-{{{cns}}} .overdrive_character { top: 150px ; left:  15px; }
+#mod-pedal-{{{cns}}} .reverb_mix          { top: 150px ; left: 105px; }
+#mod-pedal-{{{cns}}} .volume              { top: 150px ; left: 285px; }
+
+#mod-pedal-{{{cns}}} .percussion_enable   { top: 220px ; left: 15px; }
+#mod-pedal-{{{cns}}} .percussion_volume   { top: 220px ; left: 105px; }
+#mod-pedal-{{{cns}}} .percussion_decay    { top: 290px ; left: 15px; }
+#mod-pedal-{{{cns}}} .percussion_harmonic { top: 290px ; left: 105px; }
+
+#mod-pedal-{{{cns}}} .vibrato_knok        { top: 150px ; left: 195px; }
+#mod-pedal-{{{cns}}} .vibrato_upper       { top: 220px ; left: 195px; }
+#mod-pedal-{{{cns}}} .vibrato_lower       { top: 290px ; left: 195px; }
+
+
+#mod-pedal-{{{cns}}} .indicators {
+	position: absolute;
+}
+#mod-pedal-{{{cns}}} .indicator {
+	cursor:pointer;
+	z-index: 30;
+	position: absolute;
+	left: 35px;
+	width: 59px;
+	height: 59px;
+	background-repeat: no-repeat;
+}
+
+#mod-pedal-{{{cns}}}.upper-mode .indicator-upper .label,
+#mod-pedal-{{{cns}}}.lower-mode .indicator-lower .label,
+#mod-pedal-{{{cns}}}.pedal-mode .indicator-pedal .label {
+	color: white !important;
+}
+
+#mod-pedal-{{{cns}}} .indicator-upper { top:  35px; background-image:url(/resources/icons/keyboard.png{{{ns}}});}
+#mod-pedal-{{{cns}}} .indicator-lower { top:  78px; background-image:url(/resources/icons/keyboard.png{{{ns}}});}
+#mod-pedal-{{{cns}}} .indicator-pedal { top: 121px; background-image:url(/resources/icons/pedal.png{{{ns}}});}
+
+#mod-pedal-{{{cns}}} .indicator .label {
+	position: absolute;
+	top: 13px;
+	font-size: 11px;
+	width: 100%;
+	text-align: center;
+	text-transform: uppercase;
+	font-weight: bold;
+	color: #C0C0C0;
+	background: none;
+}
+
+#mod-pedal-{{{cns}}} .drawbar-group {
+    position: absolute;
+	overflow: hidden;
+	left: 80px;
+	width: 280px;
+	height: 140px;
+}
+
+#mod-pedal-{{{cns}}} .mod-slider.drawbar_upper { transition: top 1s ease-in-out; top: 5px; }
+#mod-pedal-{{{cns}}} .mod-slider.drawbar_lower { transition: top 1s ease-in-out; top: 155px; }
+#mod-pedal-{{{cns}}} .mod-slider.drawbar_pedal { transition: top 1s ease-in-out; top: 305px; }
+
+#mod-pedal-{{{cns}}}.upper-mode .mod-slider.drawbar_upper { top: 5px; }
+#mod-pedal-{{{cns}}}.upper-mode .mod-slider.drawbar_lower { top: 155px; }
+#mod-pedal-{{{cns}}}.upper-mode .mod-slider.drawbar_pedal { top: 305px; }
+
+#mod-pedal-{{{cns}}}.lower-mode .mod-slider.drawbar_upper { top: -145px; }
+#mod-pedal-{{{cns}}}.lower-mode .mod-slider.drawbar_lower { top: 5px; }
+#mod-pedal-{{{cns}}}.lower-mode .mod-slider.drawbar_pedal { top: 155px; }
+
+#mod-pedal-{{{cns}}}.pedal-mode .mod-slider.drawbar_upper { top: -255px; }
+#mod-pedal-{{{cns}}}.pedal-mode .mod-slider.drawbar_lower { top: -145px; }
+#mod-pedal-{{{cns}}}.pedal-mode .mod-slider.drawbar_pedal { top: 5px; }
+
+
+#mod-pedal-{{{cns}}} .mod-slider.drawbar_16  { left: 5px; }
+#mod-pedal-{{{cns}}} .mod-slider.drawbar_513 { left: 35px; }
+#mod-pedal-{{{cns}}} .mod-slider.drawbar_8   { left: 65px; }
+#mod-pedal-{{{cns}}} .mod-slider.drawbar_4   { left: 95px; }
+#mod-pedal-{{{cns}}} .mod-slider.drawbar_223 { left: 125px; }
+#mod-pedal-{{{cns}}} .mod-slider.drawbar_2   { left: 155px; }
+#mod-pedal-{{{cns}}} .mod-slider.drawbar_135 { left: 185px; }
+#mod-pedal-{{{cns}}} .mod-slider.drawbar_113 { left: 215px; } 
+#mod-pedal-{{{cns}}} .mod-slider.drawbar_1   { left: 245px; }
+

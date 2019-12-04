@@ -168,6 +168,105 @@ This controller provides parameters to custom setBfree using MIDI, the MIDI inpu
                 lv2:index 28 ;
                 lv2:symbol "drawbar_pedal_1" ; lv2:name "Pedal Drawbar 1'" ;
                 lv2:default 0 ; lv2:minimum 0 ; lv2:maximum 8 ; lv2:portProperty lv2:integer ;
+        ] , [
+                a lv2:InputPort , lv2:ControlPort ;
+                lv2:index 29 ;
+                lv2:symbol "overdrive_character" ;
+                lv2:name "Overdrive" ;
+                lv2:default 0.0 ;
+                lv2:minimum 0.0 ;
+                lv2:maximum 1.0 ;
+        ] , [
+                a lv2:InputPort , lv2:ControlPort ;
+                lv2:index 30 ;
+                lv2:symbol "reverb_mix" ;
+                lv2:name "Reverb" ;
+                lv2:default 0.0 ;
+                lv2:minimum 0.0 ;
+                lv2:maximum 1.0 ;
+        ] , [
+                a lv2:InputPort , lv2:ControlPort ;
+                lv2:index 31 ;
+                lv2:symbol "volume" ;
+                lv2:name "Volume" ;
+                lv2:default 0.5 ;
+                lv2:minimum 0.0 ;
+                lv2:maximum 1.0 ;
+        ] , [
+                a lv2:InputPort , lv2:ControlPort ;
+                lv2:index 32 ;
+                lv2:symbol "percussion_enable" ;
+                lv2:name "Percussion" ;
+                lv2:default 0 ;
+                lv2:minimum 0 ;
+                lv2:maximum 1 ;
+                lv2:portProperty lv2:integer ;
+        ] , [
+                a lv2:InputPort , lv2:ControlPort ;
+                lv2:index 33 ;
+                lv2:symbol "percussion_volume" ;
+                lv2:name "Percussion Volume" ;
+                lv2:default 0 ;
+                lv2:minimum 0 ;
+                lv2:maximum 1 ;
+                lv2:portProperty lv2:integer , lv2:enumeration ;
+                lv2:scalePoint [ rdf:value 0 ; rdfs:label "Normal"; ] ;
+                lv2:scalePoint [ rdf:value 1 ; rdfs:label "Soft"; ] ;
+        ] , [
+                a lv2:InputPort , lv2:ControlPort ;
+                lv2:index 34 ;
+                lv2:symbol "percussion_decay" ;
+                lv2:name "Percussion Decay" ;
+                lv2:default 0 ;
+                lv2:minimum 0 ;
+                lv2:maximum 1 ;
+                lv2:portProperty lv2:integer , lv2:enumeration ;
+                lv2:scalePoint [ rdf:value 0 ; rdfs:label "Slow"; ] ;
+                lv2:scalePoint [ rdf:value 1 ; rdfs:label "Fast"; ] ;
+        ] , [
+                a lv2:InputPort , lv2:ControlPort ;
+                lv2:index 35 ;
+                lv2:symbol "percussion_harmonic" ;
+                lv2:name "Percussion Harmonic" ;
+                lv2:default 0 ;
+                lv2:minimum 0 ;
+                lv2:maximum 1 ;
+                lv2:portProperty lv2:integer , lv2:enumeration ;
+                lv2:scalePoint [ rdf:value 0 ; rdfs:label "3rd"; ] ;
+                lv2:scalePoint [ rdf:value 1 ; rdfs:label "2nd"; ] ;
+        ] , [
+                a lv2:InputPort , lv2:ControlPort ;
+                lv2:index 36 ;
+                lv2:symbol "vibrato_lower" ;
+                lv2:name "Lower Vibrato" ;
+                lv2:default 0 ;
+                lv2:minimum 0 ;
+                lv2:maximum 1 ;
+                lv2:portProperty lv2:integer ;
+        ] , [
+                a lv2:InputPort , lv2:ControlPort ;
+                lv2:index 37 ;
+                lv2:symbol "vibrato_upper" ;
+                lv2:name "Upper Vibrato" ;
+                lv2:default 0 ;
+                lv2:minimum 0 ;
+                lv2:maximum 1 ;
+                lv2:portProperty lv2:integer ;
+        ] , [
+                a lv2:InputPort , lv2:ControlPort ;
+                lv2:index 38 ;
+                lv2:symbol "vibrato_knok" ;
+                lv2:name "Vibrato" ;
+                lv2:default 0 ;
+                lv2:minimum 0 ;
+                lv2:maximum 5 ;
+                lv2:portProperty lv2:integer , lv2:enumeration ;
+                lv2:scalePoint [ rdf:value 0 ; rdfs:label "Vibrato 1"; ] ;
+                lv2:scalePoint [ rdf:value 1 ; rdfs:label "Chorale 1"; ] ;
+                lv2:scalePoint [ rdf:value 2 ; rdfs:label "Vibrato 2"; ] ;
+                lv2:scalePoint [ rdf:value 3 ; rdfs:label "Chorale 2"; ] ;
+                lv2:scalePoint [ rdf:value 4 ; rdfs:label "Vibrato 3"; ] ;
+                lv2:scalePoint [ rdf:value 5 ; rdfs:label "Chorale 3"; ] ;
         ] ;
 
         doap:developer [
