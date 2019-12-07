@@ -137,8 +137,7 @@ static LV2_Handle instantiate(const LV2_Descriptor*     descriptor,
 {
     Data* self = (Data*)calloc(1, sizeof(Data));
 
-    for (int port = PORT_CONTROL_DRAWBAR_UPPER_16;
-         port < PORT_ENUM_SIZE; port++) {
+    for (int port = PORT_CONTROL_FIRST; port < PORT_ENUM_SIZE; port++) {
     	Parameter *parameter = self->parameters + port;
     	parameter->last_value = -1;
     }
