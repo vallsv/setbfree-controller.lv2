@@ -161,5 +161,9 @@
             lv2:index 36 ;
             lv2:symbol "vibrato_knok" ;
             lv2:name "Vibrato" ;
+        ] , [
+            lv2:index 37 ;
+            lv2:symbol "rotary_speed_preset" ;
+            lv2:name "Rotary" ;
         ] ;
     ] .

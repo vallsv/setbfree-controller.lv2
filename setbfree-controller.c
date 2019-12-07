@@ -64,6 +64,7 @@ typedef enum {
 	PORT_CONTROL_VIBRATO_LOWER,
 	PORT_CONTROL_VIBRATO_UPPER,
 	PORT_CONTROL_VIBRATO_KNOK,
+	PORT_CONTROL_ROTARY_SPEED_PRESET,
 
 	// Note: it have to be the last
 	PORT_ENUM_SIZE
@@ -119,6 +120,13 @@ void convert_0to1(float* const control, uint8_t* const midi, bool to_midi) {
 	if (to_midi) {
 		float c = *control;
 	    *midi = (c < 0.5)?0:127;
+	}
+}
+
+void convert_0to2(float* const control, uint8_t* const midi, bool to_midi) {
+	if (to_midi) {
+		float c = *control;
+	    *midi = (int) ((c * 127) / 2);
 	}
 }
 
@@ -181,6 +189,7 @@ static LV2_Handle instantiate(const LV2_Descriptor*     descriptor,
     self->parameters[PORT_CONTROL_VIBRATO_LOWER].midi_config =       (SetBFreeMidiConfig) { .channel = 0, .control = 30, .convert=convert_0to1 };
     self->parameters[PORT_CONTROL_VIBRATO_UPPER].midi_config =       (SetBFreeMidiConfig) { .channel = 0, .control = 31, .convert=convert_0to1 };
     self->parameters[PORT_CONTROL_VIBRATO_KNOK].midi_config =        (SetBFreeMidiConfig) { .channel = 0, .control = 92, .convert=convert_0to5 };
+    self->parameters[PORT_CONTROL_ROTARY_SPEED_PRESET].midi_config = (SetBFreeMidiConfig) { .channel = 0, .control =  1, .convert=convert_0to2 };
 
     // Get host features
     LV2_URID_Map* urid_map = NULL;

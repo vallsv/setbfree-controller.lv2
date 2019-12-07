@@ -74,9 +74,9 @@
     background-repeat: no-repeat;
     height: 32px;
     position: absolute;
-    left: 280px;
+    left: 360px;
     right: 10px;
-    top: 265px;
+    top: 365px;
 }
 
 /* = FOOTSWITCH
@@ -86,7 +86,7 @@
     background-position:bottom center;
     background-repeat:no-repeat;
     background-size:auto 132px;
-    bottom: 50px;
+    bottom: 45px;
     left: 285px;
     right: 13px;
     cursor:pointer;
@@ -145,13 +145,23 @@
 }
 
 #mod-pedal-{{{cns}}} .mod-control-group .mod-knob .mod-knob-image {
-    background-image:url(/resources/pedals/gold.png{{{ns}}});
+    background-image: url(/resources/pedals/gold.png{{{ns}}});
     background-repeat: no-repeat;
     background-size: auto 60px;
     height: 80px;
     width: 60px;
     margin: 0 auto;
 }
+
+#mod-pedal-{{{cns}}} .mod-control-group .mod-knob.rotary_speed_preset .mod-knob-image {
+    background-image: url(/resources/pedals/toggle-3-states.png{{{ns}}});
+    background-repeat: no-repeat;
+    background-size: auto 44px;
+    height: 44px;
+    width: 64px;
+    margin: 12px auto 0;
+}
+
 
 /* = ENUMERATED LIST
 ================================================ */
@@ -308,6 +318,7 @@
 #mod-pedal-{{{cns}}} .vibrato_knok        { top: 150px ; left: 195px; }
 #mod-pedal-{{{cns}}} .vibrato_upper       { top: 220px ; left: 195px; }
 #mod-pedal-{{{cns}}} .vibrato_lower       { top: 290px ; left: 195px; }
+#mod-pedal-{{{cns}}} .rotary_speed_preset { top: 220px ; left: 285px; }
 
 
 #mod-pedal-{{{cns}}} .indicators {

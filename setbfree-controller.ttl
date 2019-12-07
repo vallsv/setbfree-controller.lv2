@@ -1,3 +1,4 @@
+
 @prefix atom: <http://lv2plug.in/ns/ext/atom#> .
 @prefix doap: <http://usefulinc.com/ns/doap#> .
 @prefix foaf: <http://xmlns.com/foaf/0.1/> .
@@ -267,7 +268,21 @@ This controller provides parameters to custom setBfree using MIDI, the MIDI inpu
                 lv2:scalePoint [ rdf:value 3 ; rdfs:label "Chorale 2"; ] ;
                 lv2:scalePoint [ rdf:value 4 ; rdfs:label "Vibrato 3"; ] ;
                 lv2:scalePoint [ rdf:value 5 ; rdfs:label "Chorale 3"; ] ;
-        ] ;
+        ] , [
+			a lv2:InputPort ,
+				lv2:ControlPort ;
+			lv2:index 39 ;
+			lv2:symbol "rotary_speed_preset" ;
+			lv2:name "Rotary Speed";
+			lv2:default 0 ;
+			lv2:minimum 0 ;
+			lv2:maximum 2 ;
+			lv2:portProperty lv2:integer, lv2:enumeration ;
+			lv2:scalePoint [ rdfs:label "Drum and horn: Chorale"; rdf:value 0 ; ] ;
+			lv2:scalePoint [ rdfs:label "Drum and horn: Off"; rdf:value 1 ; ] ;
+			lv2:scalePoint [ rdfs:label "Drum and horn: Tremolo"; rdf:value 2 ; ] ;
+			rdfs:comment "Motor control" ;
+		] ;
 
         doap:developer [
             foaf:name "vallsv" ;
