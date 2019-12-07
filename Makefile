@@ -13,15 +13,16 @@ NAME = setbfree-controller
 all: build
 build: $(NAME).so
 
-$(NAME).so: $(NAME).c.o
+$(NAME).so: build/$(NAME).c.o
 	$(CC) $^ $(LDFLAGS) -shared -Wl,--no-undefined -o $@
 
-$(NAME).c.o: $(NAME).c
+build/$(NAME).c.o: $(NAME).c
+	mkdir -p build
 	$(CC) $< $(CFLAGS) -c -o $@
 
 clean:
 	rm -rf build
-	rm -f *.o *.so
+	rm -f *.so
 
 validate:
 	find | grep \\.ttl | xargs sord_validate
