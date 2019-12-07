@@ -17,6 +17,9 @@ typedef enum {
 typedef enum {
 	PORT_ATOM_IN = 0,
     PORT_ATOM_OUT,
+
+	PORT_CONTROL_FIRST = 2,
+	PORT_CONTROL_FIRST_DRAWBAR = 2,
     PORT_CONTROL_DRAWBAR_UPPER = 2,
     PORT_CONTROL_DRAWBAR_UPPER_16 = 2,
     PORT_CONTROL_DRAWBAR_UPPER_513,
@@ -49,14 +52,29 @@ typedef enum {
     PORT_CONTROL_DRAWBAR_PEDAL_135,
     PORT_CONTROL_DRAWBAR_PEDAL_113,
     PORT_CONTROL_DRAWBAR_PEDAL_1,
+	PORT_CONTROL_LAST_DRAWBAR = 28,
+
+	PORT_CONTROL_OVERDRIVE_CHARACTER = 29,
+	PORT_CONTROL_REVERB_MIX,
+	PORT_CONTROL_VOLUME,
+	PORT_CONTROL_PERCUSSION_ENABLE,
+	PORT_CONTROL_PERCUSSION_VOLUME,
+	PORT_CONTROL_PERCUSSION_DECAY,
+	PORT_CONTROL_PERCUSSION_HARMONIC,
+	PORT_CONTROL_VIBRATO_LOWER,
+	PORT_CONTROL_VIBRATO_UPPER,
+	PORT_CONTROL_VIBRATO_KNOK,
 
 	// Note: it have to be the last
 	PORT_ENUM_SIZE
 } PortEnum;
 
+typedef void(*ConvertFuncPtr_t)(float* const control, uint8_t* const midi, bool to_midi);
+
 typedef struct {
 	uint8_t channel;
 	uint8_t control;
+	ConvertFuncPtr_t convert;
 } SetBFreeMidiConfig;
 
 typedef struct {
@@ -83,6 +101,35 @@ typedef struct {
 } Data;
 
 
+void convert_8to0(float* const control, uint8_t* const midi, bool to_midi) {
+	if (to_midi) {
+		float c = *control;
+	    *midi = 127 - (int) ((c * 127) / 8);
+	}
+}
+
+void convert_linear(float* const control, uint8_t* const midi, bool to_midi) {
+	if (to_midi) {
+		float c = *control;
+	    *midi = (int) (c * 127);
+	}
+}
+
+void convert_0to1(float* const control, uint8_t* const midi, bool to_midi) {
+	if (to_midi) {
+		float c = *control;
+	    *midi = (c < 0.5)?0:127;
+	}
+}
+
+void convert_0to5(float* const control, uint8_t* const midi, bool to_midi) {
+	if (to_midi) {
+		float c = *control;
+	    *midi = (int) ((c * 127) / 5);
+	}
+}
+
+
 static LV2_Handle instantiate(const LV2_Descriptor*     descriptor,
                               double                    rate,
                               const char*               path,
@@ -95,35 +142,46 @@ static LV2_Handle instantiate(const LV2_Descriptor*     descriptor,
     	Parameter *parameter = self->parameters + port;
     	parameter->last_value = -1;
     }
-    self->parameters[PORT_CONTROL_DRAWBAR_UPPER+0].midi_config = (SetBFreeMidiConfig) { .channel = 0, .control = 70 };
-    self->parameters[PORT_CONTROL_DRAWBAR_UPPER+1].midi_config = (SetBFreeMidiConfig) { .channel = 0, .control = 71 };
-    self->parameters[PORT_CONTROL_DRAWBAR_UPPER+2].midi_config = (SetBFreeMidiConfig) { .channel = 0, .control = 72 };
-    self->parameters[PORT_CONTROL_DRAWBAR_UPPER+3].midi_config = (SetBFreeMidiConfig) { .channel = 0, .control = 73 };
-    self->parameters[PORT_CONTROL_DRAWBAR_UPPER+4].midi_config = (SetBFreeMidiConfig) { .channel = 0, .control = 74 };
-    self->parameters[PORT_CONTROL_DRAWBAR_UPPER+5].midi_config = (SetBFreeMidiConfig) { .channel = 0, .control = 75 };
-    self->parameters[PORT_CONTROL_DRAWBAR_UPPER+6].midi_config = (SetBFreeMidiConfig) { .channel = 0, .control = 76 };
-    self->parameters[PORT_CONTROL_DRAWBAR_UPPER+7].midi_config = (SetBFreeMidiConfig) { .channel = 0, .control = 77 };
-    self->parameters[PORT_CONTROL_DRAWBAR_UPPER+8].midi_config = (SetBFreeMidiConfig) { .channel = 0, .control = 78 };
+    self->parameters[PORT_CONTROL_DRAWBAR_UPPER+0].midi_config = (SetBFreeMidiConfig) { .channel = 0, .control = 70, .convert=convert_8to0};
+    self->parameters[PORT_CONTROL_DRAWBAR_UPPER+1].midi_config = (SetBFreeMidiConfig) { .channel = 0, .control = 71, .convert=convert_8to0 };
+    self->parameters[PORT_CONTROL_DRAWBAR_UPPER+2].midi_config = (SetBFreeMidiConfig) { .channel = 0, .control = 72, .convert=convert_8to0 };
+    self->parameters[PORT_CONTROL_DRAWBAR_UPPER+3].midi_config = (SetBFreeMidiConfig) { .channel = 0, .control = 73, .convert=convert_8to0 };
+    self->parameters[PORT_CONTROL_DRAWBAR_UPPER+4].midi_config = (SetBFreeMidiConfig) { .channel = 0, .control = 74, .convert=convert_8to0 };
+    self->parameters[PORT_CONTROL_DRAWBAR_UPPER+5].midi_config = (SetBFreeMidiConfig) { .channel = 0, .control = 75, .convert=convert_8to0 };
+    self->parameters[PORT_CONTROL_DRAWBAR_UPPER+6].midi_config = (SetBFreeMidiConfig) { .channel = 0, .control = 76, .convert=convert_8to0 };
+    self->parameters[PORT_CONTROL_DRAWBAR_UPPER+7].midi_config = (SetBFreeMidiConfig) { .channel = 0, .control = 77, .convert=convert_8to0 };
+    self->parameters[PORT_CONTROL_DRAWBAR_UPPER+8].midi_config = (SetBFreeMidiConfig) { .channel = 0, .control = 78, .convert=convert_8to0 };
 
-    self->parameters[PORT_CONTROL_DRAWBAR_LOWER+0].midi_config = (SetBFreeMidiConfig) { .channel = 1, .control = 70 };
-    self->parameters[PORT_CONTROL_DRAWBAR_LOWER+1].midi_config = (SetBFreeMidiConfig) { .channel = 1, .control = 71 };
-    self->parameters[PORT_CONTROL_DRAWBAR_LOWER+2].midi_config = (SetBFreeMidiConfig) { .channel = 1, .control = 72 };
-    self->parameters[PORT_CONTROL_DRAWBAR_LOWER+3].midi_config = (SetBFreeMidiConfig) { .channel = 1, .control = 73 };
-    self->parameters[PORT_CONTROL_DRAWBAR_LOWER+4].midi_config = (SetBFreeMidiConfig) { .channel = 1, .control = 74 };
-    self->parameters[PORT_CONTROL_DRAWBAR_LOWER+5].midi_config = (SetBFreeMidiConfig) { .channel = 1, .control = 75 };
-    self->parameters[PORT_CONTROL_DRAWBAR_LOWER+6].midi_config = (SetBFreeMidiConfig) { .channel = 1, .control = 76 };
-    self->parameters[PORT_CONTROL_DRAWBAR_LOWER+7].midi_config = (SetBFreeMidiConfig) { .channel = 1, .control = 77 };
-    self->parameters[PORT_CONTROL_DRAWBAR_LOWER+8].midi_config = (SetBFreeMidiConfig) { .channel = 1, .control = 78 };
+    self->parameters[PORT_CONTROL_DRAWBAR_LOWER+0].midi_config = (SetBFreeMidiConfig) { .channel = 1, .control = 70, .convert=convert_8to0 };
+    self->parameters[PORT_CONTROL_DRAWBAR_LOWER+1].midi_config = (SetBFreeMidiConfig) { .channel = 1, .control = 71, .convert=convert_8to0 };
+    self->parameters[PORT_CONTROL_DRAWBAR_LOWER+2].midi_config = (SetBFreeMidiConfig) { .channel = 1, .control = 72, .convert=convert_8to0 };
+    self->parameters[PORT_CONTROL_DRAWBAR_LOWER+3].midi_config = (SetBFreeMidiConfig) { .channel = 1, .control = 73, .convert=convert_8to0 };
+    self->parameters[PORT_CONTROL_DRAWBAR_LOWER+4].midi_config = (SetBFreeMidiConfig) { .channel = 1, .control = 74, .convert=convert_8to0 };
+    self->parameters[PORT_CONTROL_DRAWBAR_LOWER+5].midi_config = (SetBFreeMidiConfig) { .channel = 1, .control = 75, .convert=convert_8to0 };
+    self->parameters[PORT_CONTROL_DRAWBAR_LOWER+6].midi_config = (SetBFreeMidiConfig) { .channel = 1, .control = 76, .convert=convert_8to0 };
+    self->parameters[PORT_CONTROL_DRAWBAR_LOWER+7].midi_config = (SetBFreeMidiConfig) { .channel = 1, .control = 77, .convert=convert_8to0 };
+    self->parameters[PORT_CONTROL_DRAWBAR_LOWER+8].midi_config = (SetBFreeMidiConfig) { .channel = 1, .control = 78, .convert=convert_8to0 };
 
-    self->parameters[PORT_CONTROL_DRAWBAR_PEDAL+0].midi_config = (SetBFreeMidiConfig) { .channel = 2, .control = 70 };
-    self->parameters[PORT_CONTROL_DRAWBAR_PEDAL+1].midi_config = (SetBFreeMidiConfig) { .channel = 2, .control = 71 };
-    self->parameters[PORT_CONTROL_DRAWBAR_PEDAL+2].midi_config = (SetBFreeMidiConfig) { .channel = 2, .control = 72 };
-    self->parameters[PORT_CONTROL_DRAWBAR_PEDAL+3].midi_config = (SetBFreeMidiConfig) { .channel = 2, .control = 73 };
-    self->parameters[PORT_CONTROL_DRAWBAR_PEDAL+4].midi_config = (SetBFreeMidiConfig) { .channel = 2, .control = 74 };
-    self->parameters[PORT_CONTROL_DRAWBAR_PEDAL+5].midi_config = (SetBFreeMidiConfig) { .channel = 2, .control = 75 };
-    self->parameters[PORT_CONTROL_DRAWBAR_PEDAL+6].midi_config = (SetBFreeMidiConfig) { .channel = 2, .control = 76 };
-    self->parameters[PORT_CONTROL_DRAWBAR_PEDAL+7].midi_config = (SetBFreeMidiConfig) { .channel = 2, .control = 77 };
-    self->parameters[PORT_CONTROL_DRAWBAR_PEDAL+8].midi_config = (SetBFreeMidiConfig) { .channel = 2, .control = 78 };
+    self->parameters[PORT_CONTROL_DRAWBAR_PEDAL+0].midi_config = (SetBFreeMidiConfig) { .channel = 2, .control = 70, .convert=convert_8to0 };
+    self->parameters[PORT_CONTROL_DRAWBAR_PEDAL+1].midi_config = (SetBFreeMidiConfig) { .channel = 2, .control = 71, .convert=convert_8to0 };
+    self->parameters[PORT_CONTROL_DRAWBAR_PEDAL+2].midi_config = (SetBFreeMidiConfig) { .channel = 2, .control = 72, .convert=convert_8to0 };
+    self->parameters[PORT_CONTROL_DRAWBAR_PEDAL+3].midi_config = (SetBFreeMidiConfig) { .channel = 2, .control = 73, .convert=convert_8to0 };
+    self->parameters[PORT_CONTROL_DRAWBAR_PEDAL+4].midi_config = (SetBFreeMidiConfig) { .channel = 2, .control = 74, .convert=convert_8to0 };
+    self->parameters[PORT_CONTROL_DRAWBAR_PEDAL+5].midi_config = (SetBFreeMidiConfig) { .channel = 2, .control = 75, .convert=convert_8to0 };
+    self->parameters[PORT_CONTROL_DRAWBAR_PEDAL+6].midi_config = (SetBFreeMidiConfig) { .channel = 2, .control = 76, .convert=convert_8to0 };
+    self->parameters[PORT_CONTROL_DRAWBAR_PEDAL+7].midi_config = (SetBFreeMidiConfig) { .channel = 2, .control = 77, .convert=convert_8to0 };
+    self->parameters[PORT_CONTROL_DRAWBAR_PEDAL+8].midi_config = (SetBFreeMidiConfig) { .channel = 2, .control = 78, .convert=convert_8to0 };
+
+    self->parameters[PORT_CONTROL_OVERDRIVE_CHARACTER].midi_config = (SetBFreeMidiConfig) { .channel = 0, .control = 93, .convert=convert_linear };
+    self->parameters[PORT_CONTROL_REVERB_MIX].midi_config =          (SetBFreeMidiConfig) { .channel = 0, .control = 91, .convert=convert_linear };
+    self->parameters[PORT_CONTROL_VOLUME].midi_config =              (SetBFreeMidiConfig) { .channel = 0, .control =  7, .convert=convert_linear };
+    self->parameters[PORT_CONTROL_PERCUSSION_ENABLE].midi_config =   (SetBFreeMidiConfig) { .channel = 0, .control = 80, .convert=convert_0to1 };
+    self->parameters[PORT_CONTROL_PERCUSSION_VOLUME].midi_config =   (SetBFreeMidiConfig) { .channel = 0, .control = 81, .convert=convert_0to1 };
+    self->parameters[PORT_CONTROL_PERCUSSION_DECAY].midi_config =    (SetBFreeMidiConfig) { .channel = 0, .control = 82, .convert=convert_0to1 };
+    self->parameters[PORT_CONTROL_PERCUSSION_HARMONIC].midi_config = (SetBFreeMidiConfig) { .channel = 0, .control = 83, .convert=convert_0to1 };
+    self->parameters[PORT_CONTROL_VIBRATO_LOWER].midi_config =       (SetBFreeMidiConfig) { .channel = 0, .control = 30, .convert=convert_0to1 };
+    self->parameters[PORT_CONTROL_VIBRATO_UPPER].midi_config =       (SetBFreeMidiConfig) { .channel = 0, .control = 31, .convert=convert_0to1 };
+    self->parameters[PORT_CONTROL_VIBRATO_KNOK].midi_config =        (SetBFreeMidiConfig) { .channel = 0, .control = 92, .convert=convert_0to5 };
 
     // Get host features
     LV2_URID_Map* urid_map = NULL;
@@ -177,9 +235,9 @@ static void run(LV2_Handle instance, uint32_t sample_count)
     uint8_t *msg;
 
     msg = msg_buffer;
-    for (int port = PORT_CONTROL_DRAWBAR_UPPER_16;
-         port <= PORT_CONTROL_DRAWBAR_PEDAL_1; port++) {
+    for (int port = PORT_CONTROL_FIRST; port < PORT_ENUM_SIZE; port++) {
     	Parameter *parameter = self->parameters + port;
+    	SetBFreeMidiConfig *config = &parameter->midi_config;
 
     	if (parameter->last_value == *parameter->port) {
     		continue;
@@ -187,9 +245,9 @@ static void run(LV2_Handle instance, uint32_t sample_count)
     	parameter->last_value = *parameter->port;
 
     	// make the event
-        msg[0] = MIDI_CONTROL_CHANGE + parameter->midi_config.channel;
-        msg[1] = parameter->midi_config.control;
-        msg[2] = 127 - (int) ((parameter->last_value * 127) / 8);
+        msg[0] = MIDI_CONTROL_CHANGE + config->channel;
+        msg[1] = config->control;
+        config->convert(&parameter->last_value, &msg[2], true);
     	msg += 3;
     }
 
