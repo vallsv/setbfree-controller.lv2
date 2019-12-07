@@ -1,9 +1,9 @@
 CC ?= gcc
 CXX ?= g++
 
-_FLAGS    = -Wall -Wextra -O3 -fPIC -Wno-unused-parameter
-CFLAGS   += $(_FLAGS) -std=c99
-CXXFLAGS += $(_FLAGS) -std=c++11
+_FLAGS   ?= -Wall -Wextra -O3 -Wno-unused-parameter
+CFLAGS   += $(_FLAGS) -fPIC -std=c99
+CXXFLAGS += $(_FLAGS) -fPIC -std=c++11
 
 NAME = setbfree-controller
 
