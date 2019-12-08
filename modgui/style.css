@@ -162,6 +162,24 @@
     margin: 12px auto 0;
 }
 
+#mod-pedal-{{{cns}}} .knob-scalepoints {
+    overflow: visible;
+    position: absolute;
+    height: 80px;
+    width: 80px;
+}
+#mod-pedal-{{{cns}}} .knob-scalepoints .knob-value {
+    position: absolute;
+    display: block;
+    font-size: 8px;
+    font-weight: bold;
+    line-height: 1;
+    margin: 0;
+    overflow: hidden;
+    padding: 0;
+    text-transform: uppercase;
+	color: #909090;
+}
 
 /* = ENUMERATED LIST
 ================================================ */
@@ -319,6 +337,19 @@
 #mod-pedal-{{{cns}}} .vibrato_upper       { top: 220px ; left: 195px; }
 #mod-pedal-{{{cns}}} .vibrato_lower       { top: 290px ; left: 195px; }
 #mod-pedal-{{{cns}}} .rotary_speed_preset { top: 220px ; left: 285px; }
+
+#mod-pedal-{{{cns}}} .knob-scalepoints.rotary_speed_preset { top: 220px ; left: 285px; }
+#mod-pedal-{{{cns}}} .knob-scalepoints.rotary_speed_preset .value-0 { top: 73px ; left: 15px; }
+#mod-pedal-{{{cns}}} .knob-scalepoints.rotary_speed_preset .value-1 { top: 73px ; left: 54px; }
+#mod-pedal-{{{cns}}} .knob-scalepoints.rotary_speed_preset .value-2 { top: 73px ; left: 72px; }
+
+#mod-pedal-{{{cns}}} .knob-scalepoints.vibrato_knok { top: 150px ; left: 195px; }
+#mod-pedal-{{{cns}}} .knob-scalepoints.vibrato_knok .value-0 { top: 73px ; left: 27px; }
+#mod-pedal-{{{cns}}} .knob-scalepoints.vibrato_knok .value-1 { top: 42px ; left: 15px; }
+#mod-pedal-{{{cns}}} .knob-scalepoints.vibrato_knok .value-2 { top: 10px ; left: 38px; }
+#mod-pedal-{{{cns}}} .knob-scalepoints.vibrato_knok .value-3 { top: 10px ; left: 75px; }
+#mod-pedal-{{{cns}}} .knob-scalepoints.vibrato_knok .value-4 { top: 42px ; left: 94px; }
+#mod-pedal-{{{cns}}} .knob-scalepoints.vibrato_knok .value-5 { top: 73px ; left: 82px; }
 
 
 #mod-pedal-{{{cns}}} .indicators {
