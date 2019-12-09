@@ -390,8 +390,7 @@ This controller provides parameters to custom setBfree using MIDI, the MIDI inpu
         ] ;
 
         doap:developer [
-            foaf:name "vallsv" ;
+            foaf:name "V_V" ;
         ] ;
 
-        mod:brand "MOD" ;
         mod:label "setBfree controller" .
