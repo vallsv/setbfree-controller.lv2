@@ -11,15 +11,16 @@
 #include <stdlib.h>
 
 typedef enum {
-	MIDI_CONTROL_CHANGE = 0xB0,
+    MIDI_CONTROL_CHANGE = 0xB0,
+    MIDI_PROGRAM_CHANGE = 0xC0,
 } MidiSpec;
 
 typedef enum {
-	PORT_ATOM_IN = 0,
+    PORT_ATOM_IN = 0,
     PORT_ATOM_OUT,
 
-	PORT_CONTROL_FIRST = 2,
-	PORT_CONTROL_FIRST_DRAWBAR = 2,
+    PORT_CONTROL_FIRST = 2,
+    PORT_CONTROL_FIRST_DRAWBAR = 2,
     PORT_CONTROL_DRAWBAR_UPPER = 2,
     PORT_CONTROL_DRAWBAR_UPPER_16 = 2,
     PORT_CONTROL_DRAWBAR_UPPER_513,
@@ -52,36 +53,37 @@ typedef enum {
     PORT_CONTROL_DRAWBAR_PEDAL_135,
     PORT_CONTROL_DRAWBAR_PEDAL_113,
     PORT_CONTROL_DRAWBAR_PEDAL_1,
-	PORT_CONTROL_LAST_DRAWBAR = 28,
+    PORT_CONTROL_LAST_DRAWBAR = 28,
 
-	PORT_CONTROL_OVERDRIVE_CHARACTER = 29,
-	PORT_CONTROL_REVERB_MIX,
-	PORT_CONTROL_VOLUME,
-	PORT_CONTROL_PERCUSSION_ENABLE,
-	PORT_CONTROL_PERCUSSION_VOLUME,
-	PORT_CONTROL_PERCUSSION_DECAY,
-	PORT_CONTROL_PERCUSSION_HARMONIC,
-	PORT_CONTROL_VIBRATO_LOWER,
-	PORT_CONTROL_VIBRATO_UPPER,
-	PORT_CONTROL_VIBRATO_KNOK,
-	PORT_CONTROL_ROTARY_SPEED_PRESET,
+    PORT_CONTROL_OVERDRIVE_CHARACTER = 29,
+    PORT_CONTROL_REVERB_MIX,
+    PORT_CONTROL_VOLUME,
+    PORT_CONTROL_PERCUSSION_ENABLE,
+    PORT_CONTROL_PERCUSSION_VOLUME,
+    PORT_CONTROL_PERCUSSION_DECAY,
+    PORT_CONTROL_PERCUSSION_HARMONIC,
+    PORT_CONTROL_VIBRATO_LOWER,
+    PORT_CONTROL_VIBRATO_UPPER,
+    PORT_CONTROL_VIBRATO_KNOK,
+    PORT_CONTROL_ROTARY_SPEED_PRESET,
+    PORT_CONTROL_PRESET,
 
-	// Note: it have to be the last
-	PORT_ENUM_SIZE
+    // Note: it have to be the last
+    PORT_ENUM_SIZE
 } PortEnum;
 
 typedef void(*ConvertFuncPtr_t)(float* const control, uint8_t* const midi, bool to_midi);
 
 typedef struct {
-	uint8_t channel;
-	uint8_t control;
-	ConvertFuncPtr_t convert;
+    uint8_t channel;
+    uint8_t control;
+    ConvertFuncPtr_t convert;
 } SetBFreeMidiConfig;
 
 typedef struct {
     const float* port;
-	float last_value;
-	SetBFreeMidiConfig midi_config;
+    float last_value;
+    SetBFreeMidiConfig midi_config;
 } Parameter;
 
 typedef struct {
@@ -103,38 +105,38 @@ typedef struct {
 
 
 void convert_8to0(float* const control, uint8_t* const midi, bool to_midi) {
-	if (to_midi) {
-		float c = *control;
-	    *midi = 127 - (int) ((c * 127) / 8);
-	}
+    if (to_midi) {
+        float c = *control;
+        *midi = 127 - (int) ((c * 127) / 8);
+    }
 }
 
 void convert_linear(float* const control, uint8_t* const midi, bool to_midi) {
-	if (to_midi) {
-		float c = *control;
-	    *midi = (int) (c * 127);
-	}
+    if (to_midi) {
+        float c = *control;
+        *midi = (int) (c * 127);
+    }
 }
 
 void convert_0to1(float* const control, uint8_t* const midi, bool to_midi) {
-	if (to_midi) {
-		float c = *control;
-	    *midi = (c < 0.5)?0:127;
-	}
+    if (to_midi) {
+        float c = *control;
+        *midi = (c < 0.5)?0:127;
+    }
 }
 
 void convert_0to2(float* const control, uint8_t* const midi, bool to_midi) {
-	if (to_midi) {
-		float c = *control;
-	    *midi = (int) ((c * 127) / 2);
-	}
+    if (to_midi) {
+        float c = *control;
+        *midi = (int) ((c * 127) / 2);
+    }
 }
 
 void convert_0to5(float* const control, uint8_t* const midi, bool to_midi) {
-	if (to_midi) {
-		float c = *control;
-	    *midi = (int) ((c * 127) / 5);
-	}
+    if (to_midi) {
+        float c = *control;
+        *midi = (int) ((c * 127) / 5);
+    }
 }
 
 
@@ -146,8 +148,8 @@ static LV2_Handle instantiate(const LV2_Descriptor*     descriptor,
     Data* self = (Data*)calloc(1, sizeof(Data));
 
     for (int port = PORT_CONTROL_FIRST; port < PORT_ENUM_SIZE; port++) {
-    	Parameter *parameter = self->parameters + port;
-    	parameter->last_value = -1;
+        Parameter *parameter = self->parameters + port;
+        parameter->last_value = -1;
     }
     self->parameters[PORT_CONTROL_DRAWBAR_UPPER+0].midi_config = (SetBFreeMidiConfig) { .channel = 0, .control = 70, .convert=convert_8to0};
     self->parameters[PORT_CONTROL_DRAWBAR_UPPER+1].midi_config = (SetBFreeMidiConfig) { .channel = 0, .control = 71, .convert=convert_8to0 };
@@ -191,12 +193,14 @@ static LV2_Handle instantiate(const LV2_Descriptor*     descriptor,
     self->parameters[PORT_CONTROL_VIBRATO_KNOK].midi_config =        (SetBFreeMidiConfig) { .channel = 0, .control = 92, .convert=convert_0to5 };
     self->parameters[PORT_CONTROL_ROTARY_SPEED_PRESET].midi_config = (SetBFreeMidiConfig) { .channel = 0, .control =  1, .convert=convert_0to2 };
 
+    self->parameters[PORT_CONTROL_PRESET].last_value = 0;
+
     // Get host features
     LV2_URID_Map* urid_map = NULL;
 
     for (int i = 0; features[i]; ++i) {
         if (!strcmp(features[i]->URI, LV2_URID__map)) {
-        	urid_map = (LV2_URID_Map*)features[i]->data;
+            urid_map = (LV2_URID_Map*)features[i]->data;
             break;
         }
     }
@@ -226,7 +230,7 @@ static void connect_port(LV2_Handle instance, uint32_t port, void* data)
             self->port_events_out = (LV2_Atom_Sequence*)data;
             break;
     default:
-		self->parameters[port].port = (const float*)data;
+        self->parameters[port].port = (const float*)data;
     }
 }
 
@@ -237,26 +241,35 @@ static void activate(LV2_Handle instance)
 
 static void run(LV2_Handle instance, uint32_t sample_count)
 {
-	Data* self = (Data*)instance;
+    Data* self = (Data*)instance;
     LV2_Atom midiatom;
     uint8_t msg_buffer[3 * PORT_ENUM_SIZE];
     uint8_t *msg;
 
     msg = msg_buffer;
     for (int port = PORT_CONTROL_FIRST; port < PORT_ENUM_SIZE; port++) {
-    	Parameter *parameter = self->parameters + port;
-    	SetBFreeMidiConfig *config = &parameter->midi_config;
+        Parameter *parameter = self->parameters + port;
+        SetBFreeMidiConfig *config = &parameter->midi_config;
 
-    	if (parameter->last_value == *parameter->port) {
-    		continue;
-    	}
-    	parameter->last_value = *parameter->port;
+        if (parameter->last_value == *parameter->port) {
+            continue;
+        }
+        parameter->last_value = *parameter->port;
 
-    	// make the event
-        msg[0] = MIDI_CONTROL_CHANGE + config->channel;
-        msg[1] = config->control;
-        config->convert(&parameter->last_value, &msg[2], true);
-    	msg += 3;
+        // make the event
+        if (port == PORT_CONTROL_PRESET) {
+        	uint8_t value = (uint8_t) parameter->last_value;
+        	if (value != 0) {
+                msg[0] = MIDI_PROGRAM_CHANGE + 0;
+                msg[1] = value - 1;
+                msg += 2;
+        	}
+        } else {
+            msg[0] = MIDI_CONTROL_CHANGE + config->channel;
+            msg[1] = config->control;
+            config->convert(&parameter->last_value, &msg[2], true);
+            msg += 3;
+        }
     }
 
     if (msg != msg_buffer) {
@@ -265,9 +278,9 @@ static void run(LV2_Handle instance, uint32_t sample_count)
         lv2_atom_forge_set_buffer(&self->forge, (uint8_t*)self->port_events_out, capacity);
         lv2_atom_forge_sequence_head(&self->forge, &self->frame, 0);
         midiatom.type = self->urid_midiEvent;
-		midiatom.size = msg - msg_buffer;
+        midiatom.size = msg - msg_buffer;
 
-		// send the event to the atom bus
+        // send the event to the atom bus
         lv2_atom_forge_frame_time(&self->forge, 0);
         lv2_atom_forge_raw(&self->forge, &midiatom, sizeof(LV2_Atom));
         lv2_atom_forge_raw(&self->forge, msg_buffer, midiatom.size);
