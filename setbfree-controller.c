@@ -275,31 +275,6 @@ static void run(LV2_Handle instance, uint32_t sample_count)
     }
 }
 
-void _run(LV2_Handle instance, uint32_t sample_count)
-{
-    Data* self = (Data*)instance;
-
-    // Get the capacity
-    const uint32_t out_capacity = self->port_events_out->atom.size;
-
-    // Write an empty Sequence header to the outputs
-    lv2_atom_sequence_clear(self->port_events_out);
-
-    // LV2 is so nice...
-    self->port_events_out->atom.type = self->port_events_in->atom.type;
-
-    // Read incoming events
-    LV2_ATOM_SEQUENCE_FOREACH(self->port_events_in, ev)
-    {
-        if (ev->body.type != self->urid_midiEvent) {
-        	continue;
-        }
-		lv2_atom_sequence_append_event(self->port_events_out,
-									   out_capacity,
-									   ev);
-    }
-}
-
 static void cleanup(LV2_Handle instance)
 {
     free(instance);
