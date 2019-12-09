@@ -1,11 +1,13 @@
-<div id="mod-pedal-{{{cns}}}" class="mod-pedal mod-pedal-boxy{{{cns}}} mod-boxy100 mod-{{color}} {{color}}">
+<div id="mod-pedal-{{{cns}}}" class="mod-pedal upper-mode mod-boxy100 mod-{{color}} {{color}}">
     <div mod-role="drag-handle" class="mod-drag-handle"></div>
     <div class="mod-plugin-brand"><h1>{{brand}}</h1></div>
     <div class="mod-plugin-name"><h1>{{label}}</h1></div>
-    <div class="mod-light on" mod-role="bypass-light"></div>
     <div class="indicators">
+	    <div class="mod-light light-upper on" mod-role="bypass-light"></div>
         <div onclick="pedalmode('upper')" class="indicator indicator-upper"><span class="label">Upper</span></div>
+	    <div class="mod-light light-lower on" mod-role="bypass-light"></div>
         <div onclick="pedalmode('lower')"  class="indicator indicator-lower"><span class="label">Lower</span></div>
+	    <div class="mod-light light-pedal on" mod-role="bypass-light"></div>
         <div onclick="pedalmode('pedal')"  class="indicator indicator-pedal"><span class="label">Pedal</span></div>
     </div>
 
@@ -262,7 +264,7 @@ var baseClasses;
 function pedalmode(mode) {
     pedal = document.getElementById("mod-pedal-{{{cns}}}");
     if (baseClasses == undefined) {
-        baseClasses = pedal.className;
+        baseClasses = pedal.className.replace("upper-mode", "");
     }
     pedal.className = baseClasses + " " + mode + "-mode";
 }

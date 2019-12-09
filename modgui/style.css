@@ -70,13 +70,24 @@
 /* = LIGHT ON/OFF
 ================================================ */
 #mod-pedal-{{{cns}}} .mod-light {
+	background-image: url(/resources/pedals/red-light-off.png) !important;
     background-position: center center;
     background-repeat: no-repeat;
     height: 32px;
+    width: 32px;
     position: absolute;
-    left: 360px;
-    right: 10px;
-    top: 365px;
+    left: 5px;
+}
+
+#mod-pedal-{{{cns}}} .light-upper { top: 31px; }
+#mod-pedal-{{{cns}}} .light-lower { top: 74px; }
+#mod-pedal-{{{cns}}} .light-pedal { top: 117px; }
+
+#mod-pedal-{{{cns}}}.upper-mode .light-upper.on,
+#mod-pedal-{{{cns}}}.lower-mode .light-lower.on,
+#mod-pedal-{{{cns}}}.pedal-mode .light-pedal.on
+{
+	background-image: url(/resources/pedals/red-light-on.png) !important;
 }
 
 /* = FOOTSWITCH
@@ -354,6 +365,7 @@
 
 #mod-pedal-{{{cns}}} .indicators {
 	position: absolute;
+	left: 15px;
 }
 #mod-pedal-{{{cns}}} .indicator {
 	cursor:pointer;
@@ -390,7 +402,7 @@
 #mod-pedal-{{{cns}}} .drawbar-group {
     position: absolute;
 	overflow: hidden;
-	left: 80px;
+	left: 90px;
 	width: 280px;
 	height: 140px;
 }
