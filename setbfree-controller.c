@@ -67,6 +67,8 @@ typedef enum {
     PORT_CONTROL_VIBRATO_KNOK,
     PORT_CONTROL_ROTARY_SPEED_PRESET,
     PORT_CONTROL_PRESET,
+	PORT_CONTROL_LOWER_MANUAL_PRESET,
+	PORT_CONTROL_UPPER_MANUAL_PRESET,
 
     // Note: it have to be the last
     PORT_ENUM_SIZE
@@ -194,6 +196,8 @@ static LV2_Handle instantiate(const LV2_Descriptor*     descriptor,
     self->parameters[PORT_CONTROL_ROTARY_SPEED_PRESET].midi_config = (SetBFreeMidiConfig) { .channel = 0, .control =  1, .convert=convert_0to2 };
 
     self->parameters[PORT_CONTROL_PRESET].last_value = 0;
+    self->parameters[PORT_CONTROL_LOWER_MANUAL_PRESET].last_value = 0;
+    self->parameters[PORT_CONTROL_UPPER_MANUAL_PRESET].last_value = 0;
 
     // Get host features
     LV2_URID_Map* urid_map = NULL;
@@ -257,14 +261,19 @@ static void run(LV2_Handle instance, uint32_t sample_count)
         parameter->last_value = *parameter->port;
 
         // make the event
-        if (port == PORT_CONTROL_PRESET) {
+        switch (port) {
+        case PORT_CONTROL_PRESET:
+        case PORT_CONTROL_LOWER_MANUAL_PRESET:
+        case PORT_CONTROL_UPPER_MANUAL_PRESET: {
         	uint8_t value = (uint8_t) parameter->last_value;
         	if (value != 0) {
                 msg[0] = MIDI_PROGRAM_CHANGE + 0;
                 msg[1] = value - 1;
                 msg += 2;
         	}
-        } else {
+            break;
+        }
+        default:
             msg[0] = MIDI_CONTROL_CHANGE + config->channel;
             msg[1] = config->control;
             config->convert(&parameter->last_value, &msg[2], true);
