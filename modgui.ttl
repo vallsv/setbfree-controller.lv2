@@ -136,27 +136,27 @@
         ] , [
             lv2:index 30 ;
             lv2:symbol "percussion_enable" ;
-            lv2:name "Enable" ;
+            lv2:name "Percussion" ;
         ] , [
             lv2:index 31 ;
             lv2:symbol "percussion_volume" ;
-            lv2:name "Volume" ;
+            lv2:name "P. Volume" ;
         ] , [
             lv2:index 32 ;
             lv2:symbol "percussion_decay" ;
-            lv2:name "Decay" ;
+            lv2:name "P. Decay" ;
         ] , [
             lv2:index 33 ;
             lv2:symbol "percussion_harmonic" ;
-            lv2:name "Harmonic" ;
+            lv2:name "P. Harmonic" ;
         ] , [
             lv2:index 34 ;
             lv2:symbol "vibrato_lower" ;
-            lv2:name "Lower" ;
+            lv2:name "V. Lower" ;
         ] , [
             lv2:index 35 ;
             lv2:symbol "vibrato_upper" ;
-            lv2:name "Upper" ;
+            lv2:name "V. Upper" ;
         ] , [
             lv2:index 36 ;
             lv2:symbol "vibrato_knok" ;

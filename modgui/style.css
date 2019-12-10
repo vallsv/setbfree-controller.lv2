@@ -165,7 +165,7 @@
 }
 
 #mod-pedal-{{{cns}}} .mod-control-group .mod-knob.rotary_speed_preset .mod-knob-image {
-    background-image: url(/resources/pedals/toggle-3-states.png{{{ns}}});
+    background-image: url(/resources/pedals/h-toggle-3-states.png{{{ns}}});
     background-repeat: no-repeat;
     background-size: auto 44px;
     height: 44px;
@@ -318,13 +318,16 @@
 /* = Toggle
 ================================================ */
 #mod-pedal-{{{cns}}} .mod-toggle {
-    background-image: url(/resources/pedals/toggle.png{{{ns}}});
+    position: absolute;
+	background-image: url(/resources/pedals/h-toggle.png{{{ns}}});
     background-position: bottom center;
     background-repeat: no-repeat;
-    background-size: auto 120px;
+    background-size: auto 88px;
     cursor: pointer;
-    height: 60px;
-    width: 43px;
+    top: 10px;
+    left: 10px;
+    height: 44px;
+    width: 64px;
     margin: 4px auto 0 auto;
 }
 
@@ -349,7 +352,19 @@
 #mod-pedal-{{{cns}}} .vibrato_lower       { top: 290px ; left: 195px; }
 #mod-pedal-{{{cns}}} .rotary_speed_preset { top: 220px ; left: 285px; }
 
-#mod-pedal-{{{cns}}} .knob-scalepoints.rotary_speed_preset { top: 220px ; left: 285px; }
+#mod-pedal-{{{cns}}} .knob-scalepoints.two-values .value-0 {
+	top: 73px ;
+	left: -28px;
+	text-align: right;
+	width: 100%;
+}
+#mod-pedal-{{{cns}}} .knob-scalepoints.two-values .value-1 {
+	top: 73px ;
+	left: 75px;
+	text-align: left;
+	width: 100%;
+}
+
 #mod-pedal-{{{cns}}} .knob-scalepoints.rotary_speed_preset .value-0 { top: 73px ; left: 15px; }
 #mod-pedal-{{{cns}}} .knob-scalepoints.rotary_speed_preset .value-1 { top: 73px ; left: 54px; }
 #mod-pedal-{{{cns}}} .knob-scalepoints.rotary_speed_preset .value-2 { top: 73px ; left: 72px; }
