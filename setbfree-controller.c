@@ -251,6 +251,41 @@ static void activate(LV2_Handle instance)
     // Data* self = (Data*)instance;
 }
 
+static uint8_t * write_midi_signal(uint8_t *msg, int port, Parameter *parameter)
+{
+	switch (port) {
+    case PORT_CONTROL_PRESET:
+    case PORT_CONTROL_LOWER_MANUAL_PRESET:
+    case PORT_CONTROL_UPPER_MANUAL_PRESET: {
+        uint8_t value = (uint8_t) parameter->last_value;
+        if (value != 0) {
+            msg[0] = MIDI_PROGRAM_CHANGE + 0;
+            msg[1] = value - 1;
+            msg += 2;
+        }
+        break;
+    }
+    case PORT_CONTROL_RANDOM_DRAWBARS: {
+        uint8_t value = (uint8_t) parameter->last_value;
+        if (value != 0) {
+            msg[0] = MIDI_PROGRAM_CHANGE + 0;
+            msg[1] = SETBFREE_MIDI_RANDOM_DRAWBARS - 1;
+            msg += 2;
+        }
+        break;
+    }
+    default: {
+        SetBFreeMidiConfig *config = &parameter->midi_config;
+        msg[0] = MIDI_CONTROL_CHANGE + config->channel;
+        msg[1] = config->control;
+        config->convert(&parameter->last_value, &msg[2], true);
+        msg += 3;
+    }
+    }
+	return msg;
+}
+
+
 static void run(LV2_Handle instance, uint32_t sample_count)
 {
     Data* self = (Data*)instance;
@@ -260,41 +295,15 @@ static void run(LV2_Handle instance, uint32_t sample_count)
 
     for (int port = PORT_CONTROL_FIRST; port < PORT_ENUM_SIZE; port++) {
         Parameter *parameter = self->parameters + port;
-        SetBFreeMidiConfig *config = &parameter->midi_config;
 
+        // sync cache and port
         if (parameter->last_value == *parameter->port) {
             continue;
         }
         parameter->last_value = *parameter->port;
 
         // make the event
-        switch (port) {
-        case PORT_CONTROL_PRESET:
-        case PORT_CONTROL_LOWER_MANUAL_PRESET:
-        case PORT_CONTROL_UPPER_MANUAL_PRESET: {
-        	uint8_t value = (uint8_t) parameter->last_value;
-        	if (value != 0) {
-                msg[0] = MIDI_PROGRAM_CHANGE + 0;
-                msg[1] = value - 1;
-                msg += 2;
-        	}
-            break;
-        }
-        case PORT_CONTROL_RANDOM_DRAWBARS: {
-            uint8_t value = (uint8_t) parameter->last_value;
-            if (value != 0) {
-                msg[0] = MIDI_PROGRAM_CHANGE + 0;
-                msg[1] = SETBFREE_MIDI_RANDOM_DRAWBARS - 1;
-                msg += 2;
-            }
-            break;
-        }
-        default:
-            msg[0] = MIDI_CONTROL_CHANGE + config->channel;
-            msg[1] = config->control;
-            config->convert(&parameter->last_value, &msg[2], true);
-            msg += 3;
-        }
+        msg = write_midi_signal(msg, port, parameter);
     }
 
     if (msg != msg_start) {
