@@ -21,18 +21,29 @@ MIDI notifications to update the GUI are not supported.
 
 # Build
 
-To build the plugin
+To build the plugin:
+
 ```
 make build
 ```
 # Install
 
 To install it to the user space: `~/.lv2/`
+
 ```
 make install-user
 ```
 
 To install it to your system: `/lib/lv2`
+
 ```
 make install
+```
+
+# Deploy
+
+Deploy the plugin to the Mod Duo X. It uses the default IP and it's web service.
+
+```
+make deploy
 ```
