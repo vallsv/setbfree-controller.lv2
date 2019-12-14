@@ -107,6 +107,9 @@ typedef struct {
     // atom ports
     const LV2_Atom_Sequence* port_events_in;
     LV2_Atom_Sequence* port_events_out;
+
+    // memory for MIDI message sending
+    uint8_t msg_buffer[3 * PORT_ENUM_SIZE];
 } Data;
 
 
@@ -252,10 +255,9 @@ static void run(LV2_Handle instance, uint32_t sample_count)
 {
     Data* self = (Data*)instance;
     LV2_Atom midiatom;
-    uint8_t msg_buffer[3 * PORT_ENUM_SIZE];
-    uint8_t *msg;
+    uint8_t *msg = self->msg_buffer;
+    uint8_t const *msg_start = self->msg_buffer;
 
-    msg = msg_buffer;
     for (int port = PORT_CONTROL_FIRST; port < PORT_ENUM_SIZE; port++) {
         Parameter *parameter = self->parameters + port;
         SetBFreeMidiConfig *config = &parameter->midi_config;
@@ -295,18 +297,18 @@ static void run(LV2_Handle instance, uint32_t sample_count)
         }
     }
 
-    if (msg != msg_buffer) {
+    if (msg != msg_start) {
         // get MIDI port ready
         const uint32_t capacity = self->port_events_out->atom.size;
         lv2_atom_forge_set_buffer(&self->forge, (uint8_t*)self->port_events_out, capacity);
         lv2_atom_forge_sequence_head(&self->forge, &self->frame, 0);
         midiatom.type = self->urid_midiEvent;
-        midiatom.size = msg - msg_buffer;
+        midiatom.size = msg - msg_start;
 
         // send the event to the atom bus
         lv2_atom_forge_frame_time(&self->forge, 0);
         lv2_atom_forge_raw(&self->forge, &midiatom, sizeof(LV2_Atom));
-        lv2_atom_forge_raw(&self->forge, msg_buffer, midiatom.size);
+        lv2_atom_forge_raw(&self->forge, msg_start, midiatom.size);
         lv2_atom_forge_pad(&self->forge, midiatom.size + sizeof(LV2_Atom));
     }
 }
