@@ -1,5 +1,7 @@
 CC ?= gcc
 CXX ?= g++
+PREFIX ?=
+SYSPATH ?=/lib/lv2
 
 _FLAGS   ?= -Wall -Wextra -O3 -Wno-unused-parameter
 CFLAGS   += $(_FLAGS) -fPIC -std=c99
@@ -42,5 +44,7 @@ install-user: package
 	cp -rv build/${NAME}.lv2 ~/.lv2/
 
 install: package
-	install -d $(DESTDIR)$(PREFIX)/lib/lv2/$(NAME).lv2
-	cp -rv build/${NAME}.lv2 $(DESTDIR)$(PREFIX)/lib/lv2/
+	# $(DESTDIR)$(PREFIX) is needed for Mod
+	# $(SYSPATH) default value is needed for Mod
+	install -d $(DESTDIR)$(PREFIX)$(SYSPATH)/$(NAME).lv2
+	cp -rv build/${NAME}.lv2 $(DESTDIR)$(PREFIX)$(SYSPATH)
