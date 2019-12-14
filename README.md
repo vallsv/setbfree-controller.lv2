@@ -1,6 +1,6 @@
 # setbfree-controller.lv2
 
-Virtual controller based on [LV2](http://lv2plug.in/) to tune [setBfree synthetizer](http://setbfree.org).
+Virtual controller based on [LV2](http://lv2plug.in/) to tune [setBfree synthesizer](http://setbfree.org).
 
 It was designed for [Mod Devices](moddevices.com).
 
