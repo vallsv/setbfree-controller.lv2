@@ -19,6 +19,10 @@ It uses the default MIDI settings initialized by setBfree to control:
 
 MIDI notifications to update the GUI are not supported.
 
+It does not really provide a convenient way to save and restore a configuration later. This is due to synchronization problem at start up. But an extra push button is provided, which can be triggered manually to ask the controller to emit the configuration again. If a preset is set, no other parameters are emitted. Else all the other parameters are emitted. This trigger can be binded to a physical button of the Mod device.
+
+Still it is not a perfect solution without supporting notifications from setBfree.
+
 # Build
 
 To build the plugin:

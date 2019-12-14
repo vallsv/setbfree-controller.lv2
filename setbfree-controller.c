@@ -5,7 +5,6 @@
 #include <lv2/lv2plug.in/ns/ext/atom/util.h>
 #include <lv2/lv2plug.in/ns/ext/midi/midi.h>
 #include <lv2/lv2plug.in/ns/ext/urid/urid.h>
-#include "lv2/lv2plug.in/ns/ext/atom/forge.h"
 
 #include <stdbool.h>
 #include <stdlib.h>
@@ -16,20 +15,29 @@ typedef enum {
 } MidiSpec;
 
 typedef enum {
-	SETBFREE_MIDI_RANDOM_DRAWBARS = 55,
+    SETBFREE_MIDI_RANDOM_DRAWBARS = 55,
 } SetBFreeSettings;
+
+typedef struct {
+    LV2_Atom_Event event;
+    uint8_t        msg[3];
+} LV2_Atom_MIDI;
 
 typedef enum {
     PORT_ATOM_IN = 0,
     PORT_ATOM_OUT,
 
     PORT_CONTROL_FIRST,
-    PORT_CONTROL_PRESET = PORT_CONTROL_FIRST,
+    PORT_CONTROL_SEND_CONFIGURATION = PORT_CONTROL_FIRST,
+
+    PORT_CONTROL_PRESET,
     PORT_CONTROL_LOWER_MANUAL_PRESET,
     PORT_CONTROL_UPPER_MANUAL_PRESET,
 
     PORT_CONTROL_RANDOM_DRAWBARS,
-    PORT_CONTROL_OVERDRIVE_CHARACTER,
+
+    PORT_CONTROL_FIRST_SETTING,
+    PORT_CONTROL_OVERDRIVE_CHARACTER = PORT_CONTROL_FIRST_SETTING,
     PORT_CONTROL_REVERB_MIX,
     PORT_CONTROL_VOLUME,
     PORT_CONTROL_PERCUSSION_ENABLE,
@@ -100,16 +108,12 @@ typedef struct {
     // Note: it also alloc slots for MIDI in/out but we dont care
     Parameter parameters[PORT_ENUM_SIZE];
 
-    // Forge
-    LV2_Atom_Forge forge;
-    LV2_Atom_Forge_Frame frame;
-
     // atom ports
     const LV2_Atom_Sequence* port_events_in;
     LV2_Atom_Sequence* port_events_out;
 
     // memory for MIDI message sending
-    uint8_t msg_buffer[3 * PORT_ENUM_SIZE];
+    uint8_t msg_buffer[4 * PORT_ENUM_SIZE];
 } Data;
 
 
@@ -202,6 +206,7 @@ static LV2_Handle instantiate(const LV2_Descriptor*     descriptor,
     self->parameters[PORT_CONTROL_VIBRATO_KNOK].midi_config =        (SetBFreeMidiConfig) { .channel = 0, .control = 92, .convert=convert_0to5 };
     self->parameters[PORT_CONTROL_ROTARY_SPEED_PRESET].midi_config = (SetBFreeMidiConfig) { .channel = 0, .control =  1, .convert=convert_0to2 };
 
+    self->parameters[PORT_CONTROL_SEND_CONFIGURATION].last_value = 0;
     self->parameters[PORT_CONTROL_PRESET].last_value = 0;
     self->parameters[PORT_CONTROL_LOWER_MANUAL_PRESET].last_value = 0;
     self->parameters[PORT_CONTROL_UPPER_MANUAL_PRESET].last_value = 0;
@@ -224,7 +229,6 @@ static LV2_Handle instantiate(const LV2_Descriptor*     descriptor,
 
     // Map URIs
     self->urid_midiEvent = urid_map->map(urid_map->handle, LV2_MIDI__MidiEvent);
-    lv2_atom_forge_init(&self->forge, urid_map);
 
     return self;
 }
@@ -251,45 +255,49 @@ static void activate(LV2_Handle instance)
     // Data* self = (Data*)instance;
 }
 
-static uint8_t * write_midi_signal(uint8_t *msg, int port, Parameter *parameter)
+static uint8_t * write_midi_signal(Data* self, uint8_t *msg, int port)
 {
-	switch (port) {
+    Parameter *parameter = self->parameters + port;
+
+    switch (port) {
     case PORT_CONTROL_PRESET:
     case PORT_CONTROL_LOWER_MANUAL_PRESET:
     case PORT_CONTROL_UPPER_MANUAL_PRESET: {
         uint8_t value = (uint8_t) parameter->last_value;
         if (value != 0) {
-            msg[0] = MIDI_PROGRAM_CHANGE + 0;
-            msg[1] = value - 1;
-            msg += 2;
+            msg[0] = 2;
+            msg[1] = MIDI_PROGRAM_CHANGE + 0;
+            msg[2] = value - 1;
+            msg += 4;
         }
         break;
     }
     case PORT_CONTROL_RANDOM_DRAWBARS: {
         uint8_t value = (uint8_t) parameter->last_value;
         if (value != 0) {
-            msg[0] = MIDI_PROGRAM_CHANGE + 0;
-            msg[1] = SETBFREE_MIDI_RANDOM_DRAWBARS - 1;
-            msg += 2;
+            msg[0] = 2;
+            msg[1] = MIDI_PROGRAM_CHANGE + 0;
+            msg[2] = SETBFREE_MIDI_RANDOM_DRAWBARS - 1;
+            msg += 4;
         }
         break;
     }
     default: {
         SetBFreeMidiConfig *config = &parameter->midi_config;
-        msg[0] = MIDI_CONTROL_CHANGE + config->channel;
-        msg[1] = config->control;
-        config->convert(&parameter->last_value, &msg[2], true);
-        msg += 3;
+        msg[0] = 3;
+        msg[1] = MIDI_CONTROL_CHANGE + config->channel;
+        msg[2] = config->control;
+        config->convert(&parameter->last_value, &msg[3], true);
+        msg += 4;
     }
     }
-	return msg;
+    return msg;
 }
 
 
 static void run(LV2_Handle instance, uint32_t sample_count)
 {
     Data* self = (Data*)instance;
-    LV2_Atom midiatom;
     uint8_t *msg = self->msg_buffer;
     uint8_t const *msg_start = self->msg_buffer;
 
@@ -302,23 +310,49 @@ static void run(LV2_Handle instance, uint32_t sample_count)
         }
         parameter->last_value = *parameter->port;
 
+        if (port == PORT_CONTROL_SEND_CONFIGURATION) {
+            // reset the current MIDI messages
+            // and do not do anything else
+            if (parameter->last_value == 0) {
+                continue;
+            }
+            msg = self->msg_buffer;
+            msg = write_midi_signal(self, msg, PORT_CONTROL_PRESET);
+            msg = write_midi_signal(self, msg, PORT_CONTROL_LOWER_MANUAL_PRESET);
+            msg = write_midi_signal(self, msg, PORT_CONTROL_UPPER_MANUAL_PRESET);
+            if (msg != msg_start) {
+                // break if there is any presets
+                break;
+            }
+
+            // feed with all the settings
+            for (int port = PORT_CONTROL_FIRST_SETTING; port < PORT_ENUM_SIZE; port++) {
+                msg = write_midi_signal(self, msg, port);
+            }
+            break;
+        }
+
         // make the event
-        msg = write_midi_signal(msg, port, parameter);
+        msg = write_midi_signal(self, msg, port);
     }
 
     if (msg != msg_start) {
         // get MIDI port ready
         const uint32_t capacity = self->port_events_out->atom.size;
-        lv2_atom_forge_set_buffer(&self->forge, (uint8_t*)self->port_events_out, capacity);
-        lv2_atom_forge_sequence_head(&self->forge, &self->frame, 0);
-        midiatom.type = self->urid_midiEvent;
-        midiatom.size = msg - msg_start;
+        lv2_atom_sequence_clear(self->port_events_out);
+        self->port_events_out->atom.type = self->port_events_in->atom.type;
 
-        // send the event to the atom bus
-        lv2_atom_forge_frame_time(&self->forge, 0);
-        lv2_atom_forge_raw(&self->forge, &midiatom, sizeof(LV2_Atom));
-        lv2_atom_forge_raw(&self->forge, msg_start, midiatom.size);
-        lv2_atom_forge_pad(&self->forge, midiatom.size + sizeof(LV2_Atom));
+        LV2_Atom_MIDI midimsg;
+        memset(&midimsg, 0, sizeof(LV2_Atom_MIDI));
+
+        for (uint8_t const *m = msg_start; m < msg; m += 4) {
+            midimsg.event.body.size = m[0];
+            midimsg.event.body.type = self->urid_midiEvent;
+            midimsg.msg[0] = m[1];
+            midimsg.msg[1] = m[2];
+            midimsg.msg[2] = m[3];
+            lv2_atom_sequence_append_event(self->port_events_out, capacity, &midimsg.event);
+        }
     }
 }
 
