@@ -16,6 +16,10 @@ typedef enum {
 } MidiSpec;
 
 typedef enum {
+	SETBFREE_MIDI_RANDOM_DRAWBARS = 55,
+} SetBFreeSettings;
+
+typedef enum {
     PORT_ATOM_IN = 0,
     PORT_ATOM_OUT,
 
@@ -24,6 +28,7 @@ typedef enum {
     PORT_CONTROL_LOWER_MANUAL_PRESET,
     PORT_CONTROL_UPPER_MANUAL_PRESET,
 
+    PORT_CONTROL_RANDOM_DRAWBARS,
     PORT_CONTROL_OVERDRIVE_CHARACTER,
     PORT_CONTROL_REVERB_MIX,
     PORT_CONTROL_VOLUME,
@@ -197,6 +202,7 @@ static LV2_Handle instantiate(const LV2_Descriptor*     descriptor,
     self->parameters[PORT_CONTROL_PRESET].last_value = 0;
     self->parameters[PORT_CONTROL_LOWER_MANUAL_PRESET].last_value = 0;
     self->parameters[PORT_CONTROL_UPPER_MANUAL_PRESET].last_value = 0;
+    self->parameters[PORT_CONTROL_RANDOM_DRAWBARS].last_value = 0;
 
     // Get host features
     LV2_URID_Map* urid_map = NULL;
@@ -270,6 +276,15 @@ static void run(LV2_Handle instance, uint32_t sample_count)
                 msg[1] = value - 1;
                 msg += 2;
         	}
+            break;
+        }
+        case PORT_CONTROL_RANDOM_DRAWBARS: {
+            uint8_t value = (uint8_t) parameter->last_value;
+            if (value != 0) {
+                msg[0] = MIDI_PROGRAM_CHANGE + 0;
+                msg[1] = SETBFREE_MIDI_RANDOM_DRAWBARS - 1;
+                msg += 2;
+            }
             break;
         }
         default:

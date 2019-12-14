@@ -139,9 +139,17 @@ This controller provides parameters to custom setBfree using MIDI, the MIDI inpu
                 lv2:scalePoint [ rdf:value  98; rdfs:label "Trumpet 8'"; ] ;
                 lv2:scalePoint [ rdf:value  99; rdfs:label "Full Theatre Brass 16'"; ] ;
         ] , [
-
                 a lv2:InputPort , lv2:ControlPort ;
                 lv2:index 5 ;
+                lv2:symbol "random_drawbars" ;
+                lv2:name "Randomize drawbars" ;
+                lv2:default 0 ;
+                lv2:minimum 0 ;
+                lv2:maximum 1 ;
+                lv2:portProperty lv2:toggled , lv2:trigger ;
+        ] , [
+                a lv2:InputPort , lv2:ControlPort ;
+                lv2:index 6 ;
                 lv2:symbol "overdrive_character" ;
                 lv2:name "Overdrive" ;
                 lv2:default 0.0 ;
@@ -149,7 +157,7 @@ This controller provides parameters to custom setBfree using MIDI, the MIDI inpu
                 lv2:maximum 1.0 ;
         ] , [
                 a lv2:InputPort , lv2:ControlPort ;
-                lv2:index 6 ;
+                lv2:index 7 ;
                 lv2:symbol "reverb_mix" ;
                 lv2:name "Reverb" ;
                 lv2:default 0.0 ;
@@ -157,7 +165,7 @@ This controller provides parameters to custom setBfree using MIDI, the MIDI inpu
                 lv2:maximum 1.0 ;
         ] , [
                 a lv2:InputPort , lv2:ControlPort ;
-                lv2:index 7 ;
+                lv2:index 8 ;
                 lv2:symbol "volume" ;
                 lv2:name "Volume" ;
                 lv2:default 0.5 ;
@@ -165,7 +173,7 @@ This controller provides parameters to custom setBfree using MIDI, the MIDI inpu
                 lv2:maximum 1.0 ;
         ] , [
                 a lv2:InputPort , lv2:ControlPort ;
-                lv2:index 8 ;
+                lv2:index 9 ;
                 lv2:symbol "percussion_enable" ;
                 lv2:name "Percussion" ;
                 lv2:default 0 ;
@@ -174,7 +182,7 @@ This controller provides parameters to custom setBfree using MIDI, the MIDI inpu
                 lv2:portProperty lv2:integer , lv2:toggled ;
         ] , [
                 a lv2:InputPort , lv2:ControlPort ;
-                lv2:index 9 ;
+                lv2:index 10 ;
                 lv2:symbol "percussion_volume" ;
                 lv2:name "Percussion Volume" ;
                 lv2:default 0 ;
@@ -185,7 +193,7 @@ This controller provides parameters to custom setBfree using MIDI, the MIDI inpu
                 lv2:scalePoint [ rdf:value 1 ; rdfs:label "Soft"; ] ;
         ] , [
                 a lv2:InputPort , lv2:ControlPort ;
-                lv2:index 10 ;
+                lv2:index 11 ;
                 lv2:symbol "percussion_decay" ;
                 lv2:name "Percussion Decay" ;
                 lv2:default 0 ;
@@ -196,7 +204,7 @@ This controller provides parameters to custom setBfree using MIDI, the MIDI inpu
                 lv2:scalePoint [ rdf:value 1 ; rdfs:label "Fast"; ] ;
         ] , [
                 a lv2:InputPort , lv2:ControlPort ;
-                lv2:index 11 ;
+                lv2:index 12 ;
                 lv2:symbol "percussion_harmonic" ;
                 lv2:name "Percussion Harmonic" ;
                 lv2:default 0 ;
@@ -207,7 +215,7 @@ This controller provides parameters to custom setBfree using MIDI, the MIDI inpu
                 lv2:scalePoint [ rdf:value 1 ; rdfs:label "2nd"; ] ;
         ] , [
                 a lv2:InputPort , lv2:ControlPort ;
-                lv2:index 12 ;
+                lv2:index 13 ;
                 lv2:symbol "vibrato_lower" ;
                 lv2:name "Lower Vibrato" ;
                 lv2:default 0 ;
@@ -216,7 +224,7 @@ This controller provides parameters to custom setBfree using MIDI, the MIDI inpu
                 lv2:portProperty lv2:integer , lv2:toggled ;
         ] , [
                 a lv2:InputPort , lv2:ControlPort ;
-                lv2:index 13 ;
+                lv2:index 14 ;
                 lv2:symbol "vibrato_upper" ;
                 lv2:name "Upper Vibrato" ;
                 lv2:default 0 ;
@@ -225,7 +233,7 @@ This controller provides parameters to custom setBfree using MIDI, the MIDI inpu
                 lv2:portProperty lv2:integer , lv2:toggled ;
         ] , [
                 a lv2:InputPort , lv2:ControlPort ;
-                lv2:index 14 ;
+                lv2:index 15 ;
                 lv2:symbol "vibrato_knok" ;
                 lv2:name "Vibrato" ;
                 lv2:default 0 ;
@@ -241,7 +249,7 @@ This controller provides parameters to custom setBfree using MIDI, the MIDI inpu
         ] , [
                 a lv2:InputPort ,
                 	lv2:ControlPort ;
-                lv2:index 15 ;
+                lv2:index 16 ;
                 lv2:symbol "rotary_speed_preset" ;
                 lv2:name "Rotary Speed";
                 lv2:default 0 ;
@@ -254,137 +262,137 @@ This controller provides parameters to custom setBfree using MIDI, the MIDI inpu
                 rdfs:comment "Motor control" ;
         ] , [
                 a lv2:InputPort , lv2:ControlPort ;
-                lv2:index 16 ;
+                lv2:index 17 ;
                 lv2:symbol "drawbar_upper_16" ; lv2:name "Upper Drawbar 16'" ;
                 lv2:default 0 ; lv2:minimum 0 ; lv2:maximum 8 ; lv2:portProperty lv2:integer ;
         ] , [
                 a lv2:InputPort , lv2:ControlPort ;
-                lv2:index 17 ;
+                lv2:index 18 ;
                 lv2:symbol "drawbar_upper_513" ; lv2:name "Upper Drawbar 5 1/3'" ;
                 lv2:default 0 ; lv2:minimum 0 ; lv2:maximum 8 ; lv2:portProperty lv2:integer ;
         ] , [
                 a lv2:InputPort , lv2:ControlPort ;
-                lv2:index 18 ;
+                lv2:index 19 ;
                 lv2:symbol "drawbar_upper_8" ; lv2:name "Upper Drawbar 8'" ;
                 lv2:default 0 ; lv2:minimum 0 ; lv2:maximum 8 ; lv2:portProperty lv2:integer ;
         ] , [
                 a lv2:InputPort , lv2:ControlPort ;
-                lv2:index 19 ;
+                lv2:index 20 ;
                 lv2:symbol "drawbar_upper_4" ; lv2:name "Upper Drawbar 4'" ;
                 lv2:default 0 ; lv2:minimum 0 ; lv2:maximum 8 ; lv2:portProperty lv2:integer ;
         ] , [
                 a lv2:InputPort , lv2:ControlPort ;
-                lv2:index 20 ;
+                lv2:index 21 ;
                 lv2:symbol "drawbar_upper_223" ; lv2:name "Upper Drawbar 2 2/3'" ;
                 lv2:default 0 ; lv2:minimum 0 ; lv2:maximum 8 ; lv2:portProperty lv2:integer ;
         ] , [
                 a lv2:InputPort , lv2:ControlPort ;
-                lv2:index 21 ;
+                lv2:index 22 ;
                 lv2:symbol "drawbar_upper_2" ; lv2:name "Upper Drawbar 2'" ;
                 lv2:default 0 ; lv2:minimum 0 ; lv2:maximum 8 ; lv2:portProperty lv2:integer ;
         ] , [
                 a lv2:InputPort , lv2:ControlPort ;
-                lv2:index 22 ;
+                lv2:index 23 ;
                 lv2:symbol "drawbar_upper_135" ; lv2:name "Upper Drawbar 1 3/5'" ;
                 lv2:default 0 ; lv2:minimum 0 ; lv2:maximum 8 ; lv2:portProperty lv2:integer ;
         ] , [
                 a lv2:InputPort , lv2:ControlPort ;
-                lv2:index 23 ;
+                lv2:index 24 ;
                 lv2:symbol "drawbar_upper_113" ; lv2:name "Upper Drawbar 1 1/3'" ;
                 lv2:default 0 ; lv2:minimum 0 ; lv2:maximum 8 ; lv2:portProperty lv2:integer ;
         ] , [
                 a lv2:InputPort , lv2:ControlPort ;
-                lv2:index 24 ;
+                lv2:index 25 ;
                 lv2:symbol "drawbar_upper_1" ; lv2:name "Upper Drawbar 1'" ;
                 lv2:default 0 ; lv2:minimum 0 ; lv2:maximum 8 ; lv2:portProperty lv2:integer ;
         ] , [
                 a lv2:InputPort , lv2:ControlPort ;
-                lv2:index 25 ;
+                lv2:index 26 ;
                 lv2:symbol "drawbar_lower_16" ; lv2:name "Lower Drawbar 16'" ;
                 lv2:default 0 ; lv2:minimum 0 ; lv2:maximum 8 ; lv2:portProperty lv2:integer ;
         ] , [
                 a lv2:InputPort , lv2:ControlPort ;
-                lv2:index 26 ;
+                lv2:index 27 ;
                 lv2:symbol "drawbar_lower_513" ; lv2:name "Lower Drawbar 5 1/3'" ;
                 lv2:default 0 ; lv2:minimum 0 ; lv2:maximum 8 ; lv2:portProperty lv2:integer ;
         ] , [
                 a lv2:InputPort , lv2:ControlPort ;
-                lv2:index 27 ;
+                lv2:index 28 ;
                 lv2:symbol "drawbar_lower_8" ; lv2:name "Lower Drawbar 8'" ;
                 lv2:default 0 ; lv2:minimum 0 ; lv2:maximum 8 ; lv2:portProperty lv2:integer ;
         ] , [
                 a lv2:InputPort , lv2:ControlPort ;
-                lv2:index 28 ;
+                lv2:index 29 ;
                 lv2:symbol "drawbar_lower_4" ; lv2:name "Lower Drawbar 4'" ;
                 lv2:default 0 ; lv2:minimum 0 ; lv2:maximum 8 ; lv2:portProperty lv2:integer ;
         ] , [
                 a lv2:InputPort , lv2:ControlPort ;
-                lv2:index 29 ;
+                lv2:index 30 ;
                 lv2:symbol "drawbar_lower_223" ; lv2:name "Lower Drawbar 2 2/3'" ;
                 lv2:default 0 ; lv2:minimum 0 ; lv2:maximum 8 ; lv2:portProperty lv2:integer ;
         ] , [
                 a lv2:InputPort , lv2:ControlPort ;
-                lv2:index 30 ;
+                lv2:index 31 ;
                 lv2:symbol "drawbar_lower_2" ; lv2:name "Lower Drawbar 2'" ;
                 lv2:default 0 ; lv2:minimum 0 ; lv2:maximum 8 ; lv2:portProperty lv2:integer ;
         ] , [
                 a lv2:InputPort , lv2:ControlPort ;
-                lv2:index 31 ;
+                lv2:index 32 ;
                 lv2:symbol "drawbar_lower_135" ; lv2:name "Lower Drawbar 1 3/5'" ;
                 lv2:default 0 ; lv2:minimum 0 ; lv2:maximum 8 ; lv2:portProperty lv2:integer ;
         ] , [
                 a lv2:InputPort , lv2:ControlPort ;
-                lv2:index 32 ;
+                lv2:index 33 ;
                 lv2:symbol "drawbar_lower_113" ; lv2:name "Lower Drawbar 1 1/3'" ;
                 lv2:default 0 ; lv2:minimum 0 ; lv2:maximum 8 ; lv2:portProperty lv2:integer ;
         ] , [
                 a lv2:InputPort , lv2:ControlPort ;
-                lv2:index 33 ;
+                lv2:index 34 ;
                 lv2:symbol "drawbar_lower_1" ; lv2:name "Lower Drawbar 1'" ;
                 lv2:default 0 ; lv2:minimum 0 ; lv2:maximum 8 ; lv2:portProperty lv2:integer ;
         ] , [
                 a lv2:InputPort , lv2:ControlPort ;
-                lv2:index 34 ;
+                lv2:index 35 ;
                 lv2:symbol "drawbar_pedal_16" ; lv2:name "Pedal Drawbar 16'" ;
                 lv2:default 0 ; lv2:minimum 0 ; lv2:maximum 8 ; lv2:portProperty lv2:integer ;
         ] , [
                 a lv2:InputPort , lv2:ControlPort ;
-                lv2:index 35 ;
+                lv2:index 36 ;
                 lv2:symbol "drawbar_pedal_513" ; lv2:name "Pedal Drawbar 5 1/3'" ;
                 lv2:default 0 ; lv2:minimum 0 ; lv2:maximum 8 ; lv2:portProperty lv2:integer ;
         ] , [
                 a lv2:InputPort , lv2:ControlPort ;
-                lv2:index 36 ;
+                lv2:index 37 ;
                 lv2:symbol "drawbar_pedal_8" ; lv2:name "Pedal Drawbar 8'" ;
                 lv2:default 0 ; lv2:minimum 0 ; lv2:maximum 8 ; lv2:portProperty lv2:integer ;
         ] , [
                 a lv2:InputPort , lv2:ControlPort ;
-                lv2:index 37 ;
+                lv2:index 38 ;
                 lv2:symbol "drawbar_pedal_4" ; lv2:name "Pedal Drawbar 4'" ;
                 lv2:default 0 ; lv2:minimum 0 ; lv2:maximum 8 ; lv2:portProperty lv2:integer ;
         ] , [
                 a lv2:InputPort , lv2:ControlPort ;
-                lv2:index 38 ;
+                lv2:index 39 ;
                 lv2:symbol "drawbar_pedal_223" ; lv2:name "Pedal Drawbar 2 2/3'" ;
                 lv2:default 0 ; lv2:minimum 0 ; lv2:maximum 8 ; lv2:portProperty lv2:integer ;
         ] , [
                 a lv2:InputPort , lv2:ControlPort ;
-                lv2:index 39 ;
+                lv2:index 40 ;
                 lv2:symbol "drawbar_pedal_2" ; lv2:name "Pedal Drawbar 2'" ;
                 lv2:default 0 ; lv2:minimum 0 ; lv2:maximum 8 ; lv2:portProperty lv2:integer ;
         ] , [
                 a lv2:InputPort , lv2:ControlPort ;
-                lv2:index 40 ;
+                lv2:index 41 ;
                 lv2:symbol "drawbar_pedal_135" ; lv2:name "Pedal Drawbar 1 3/5'" ;
                 lv2:default 0 ; lv2:minimum 0 ; lv2:maximum 8 ; lv2:portProperty lv2:integer ;
         ] , [
                 a lv2:InputPort , lv2:ControlPort ;
-                lv2:index 41 ;
+                lv2:index 42 ;
                 lv2:symbol "drawbar_pedal_113" ; lv2:name "Pedal Drawbar 1 1/3'" ;
                 lv2:default 0 ; lv2:minimum 0 ; lv2:maximum 8 ; lv2:portProperty lv2:integer ;
         ] , [
                 a lv2:InputPort , lv2:ControlPort ;
-                lv2:index 42 ;
+                lv2:index 43 ;
                 lv2:symbol "drawbar_pedal_1" ; lv2:name "Pedal Drawbar 1'" ;
                 lv2:default 0 ; lv2:minimum 0 ; lv2:maximum 8 ; lv2:portProperty lv2:integer ;
         ] ;
