@@ -449,3 +449,17 @@
 #mod-pedal-{{{cns}}} .mod-slider.drawbar_113 { left: 215px; } 
 #mod-pedal-{{{cns}}} .mod-slider.drawbar_1   { left: 245px; }
 
+#mod-pedal-{{{cns}}} .mod-slider.drawbar_16 .mod-slider-image,
+#mod-pedal-{{{cns}}} .mod-slider.drawbar_513 .mod-slider-image
+ { background-image: url(/resources/pedals/slider-brown.png{{{ns}}}) !important; }
+
+#mod-pedal-{{{cns}}} .mod-slider.drawbar_223 .mod-slider-image,
+#mod-pedal-{{{cns}}} .mod-slider.drawbar_135 .mod-slider-image,
+#mod-pedal-{{{cns}}} .mod-slider.drawbar_113 .mod-slider-image
+ { background-image: url(/resources/pedals/slider-black.png{{{ns}}}); }
+
+#mod-pedal-{{{cns}}} .mod-slider.drawbar_8 .mod-slider-image,
+#mod-pedal-{{{cns}}} .mod-slider.drawbar_4 .mod-slider-image,
+#mod-pedal-{{{cns}}} .mod-slider.drawbar_2 .mod-slider-image,
+#mod-pedal-{{{cns}}} .mod-slider.drawbar_1 .mod-slider-image
+ { background-image: url(/resources/pedals/slider-white.png{{{ns}}}); }
