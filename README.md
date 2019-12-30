@@ -2,7 +2,7 @@
 
 Virtual controller based on [LV2](http://lv2plug.in/) to tune [setBfree synthesizer](http://setbfree.org).
 
-It was designed for [Mod Devices](moddevices.com).
+It was designed for [Mod Devices](http://moddevices.com).
 
 ![Preview](./modgui/screenshot.png)
 
